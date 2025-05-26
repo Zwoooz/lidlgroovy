@@ -3,13 +3,13 @@
   "compilerOptions": {
     "noImplicitAny": true,
     "declaration": false,
-    "skipLibCheck": true,
     "strictNullChecks": true,
     "resolveJsonModule": true,
     "outDir": "dist"
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "env.d.ts"
   ],
   "exclude": [
     "node_modules"

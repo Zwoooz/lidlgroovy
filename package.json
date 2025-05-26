@@ -4,7 +4,7 @@
   "description": "lidlgroovy discord bot",
   "license": "ISC",
   "author": "Zwoooz",
-  "type": "commonjs",
+  "type": "module",
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",
@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "discord.js": "^14.19.3",
-    "dotenv": "^16.5.0"
+    "dotenv": "^16.5.0",
+    "glob": "^11.0.2"
   }
 }
