@@ -2,10 +2,10 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import 'dotenv/config';
-import { Client, Collection, Events, GatewayIntentBits } from 'discord.js';
+import { Client, Collection } from 'discord.js';
 
 const client = new Client({
-  intents: ['Guilds', 'GuildMessages', 'GuildMembers', 'MessageContent'],
+  intents: ['Guilds', 'GuildMessages', 'GuildMembers', 'MessageContent', 'GuildVoiceStates'],
 });
 
 (async () => {
@@ -25,13 +25,13 @@ const client = new Client({
     );
 
     for (const file of commandFiles) {
-      const filePath = path.join(commandsPath, file)
-      const { default: command } = await import(filePath)
+      const filePath = path.join(commandsPath, file);
+      const { default: command } = await import(filePath);
 
       if ('data' in command && 'execute' in command) {
         client.commands.set(command.data.name, command);
       } else {
-        console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`)
+        console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`); //eslint-disable-line max-len
       }
     }
   }

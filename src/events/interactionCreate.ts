@@ -1,4 +1,4 @@
-import { Events, MessageFlags, Interaction } from "discord.js";
+import { Events, Interaction } from "discord.js";
 
 export default {
   name: Events.InteractionCreate,
@@ -17,10 +17,10 @@ export default {
     } catch (error) {
       console.error(error);
       if (interaction.replied || interaction.deferred) {
-        await interaction.followUp({ content: 'There was an error executing that command!' })
+        await interaction.followUp({ content: 'There was an error executing that command!' });
       } else {
-        await interaction.reply({ content: 'There was an error executing that command!' })
+        await interaction.reply({ content: 'There was an error executing that command!' });
       }
     }
   }
-}
+};

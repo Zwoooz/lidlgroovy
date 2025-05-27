@@ -7,7 +7,9 @@ const rest = new REST().setToken(process.env.TOKEN);
 
 (async () => {
   const rl = readline.createInterface({ input, output });
-  const answer = await rl.question('Are you sure you want to delete all registered commands from the application? [y/N]: ');
+  const answer = await rl.question(
+    'Are you sure you want to delete all registered commands from the application? [y/N]: '
+  );
 
   rl.close();
 

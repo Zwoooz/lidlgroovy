@@ -24,7 +24,7 @@ const commands: RESTPostAPIApplicationCommandsJSONBody[] = [];
       if ('data' in command && 'execute' in command) {
         commands.push(command.data.toJSON());
       } else {
-        console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
+        console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`); //eslint-disable-line max-len
       }
     }
   }
@@ -37,7 +37,7 @@ const commands: RESTPostAPIApplicationCommandsJSONBody[] = [];
       Routes.applicationCommands(process.env.clientId),
       { body: commands },
     ) as RESTPostAPIApplicationCommandsJSONBody[];
-    console.log(`Successfully reloaded ${data.length} application (/) commands.`)
+    console.log(`Successfully reloaded ${data.length} application (/) commands.`);
   } catch (error) {
     console.log(error);
   }
