@@ -36,13 +36,13 @@ const client = new Client({
     }
   }
 
-  const eventsPath = path.join(__dirname, 'events');
-  const eventFiles = fs.readdirSync(eventsPath).filter(
+  const clientEventsPath = path.join(__dirname, 'events/client');
+  const clientEventFiles = fs.readdirSync(clientEventsPath).filter(
     (file) => file.endsWith('.js') || file.endsWith('.ts')
   );
 
-  for (const file of eventFiles) {
-    const filePath = path.join(eventsPath, file);
+  for (const file of clientEventFiles) {
+    const filePath = path.join(clientEventsPath, file);
     const { default: event } = await import(filePath);
 
     if (event.once) {
@@ -51,6 +51,25 @@ const client = new Client({
       client.on(event.name, (...args) => event.execute(...args));
     }
   }
+
+
+  // NOTE: below code should be able to handle player event files once player is implemented properly
+ 
+  // const playerEventsPath = path.join(__dirname, 'events/player');
+  // const playerEventFiles = fs.readdirSync(playerEventsPath).filter(
+  //   (file) => file.endsWith('.js') || file.endsWith('.ts')
+  // );
+  //
+  // for (const file of playerEventFiles) {
+  //   const filePath = path.join(playerEventsPath, file);
+  //   const { default: event } = await import(filePath);
+  //
+  //   if (event.once) {
+  //     player.once(event.name, (...args) => event.execute(...args));
+  //   } else {
+  //     player.on(event.name, (...args) => event.execute(...args));
+  //   }
+  // }
 })();
 
 

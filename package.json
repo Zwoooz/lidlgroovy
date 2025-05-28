@@ -24,6 +24,7 @@
     "@discordjs/opus": "^0.10.0",
     "@discordjs/voice": "^0.18.0",
     "@distube/ytdl-core": "^4.16.10",
+    "chalk": "^5.4.1",
     "discord.js": "^14.19.3",
     "dotenv": "^16.5.0",
     "libsodium-wrappers": "^0.7.15",
