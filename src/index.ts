@@ -20,9 +20,9 @@ const client = new Client({
 
   for (const folder of commandFolders) {
     const commandsPath = path.join(foldersPath, folder);
-    const commandFiles = fs.readdirSync(commandsPath).filter(
-      (file) => file.endsWith('.js') || file.endsWith('.ts')
-    );
+    const commandFiles = fs
+      .readdirSync(commandsPath)
+      .filter(file => file.endsWith('.js') || file.endsWith('.ts'));
 
     for (const file of commandFiles) {
       const filePath = path.join(commandsPath, file);
@@ -31,18 +31,18 @@ const client = new Client({
       if ('data' in command && 'execute' in command) {
         client.commands.set(command.data.name, command);
       } else {
-        console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`); //eslint-disable-line max-len
+        console.log(`[WARNING] The command at "${filePath}" is missing a required "data" or "execute" property.`); // eslint-disable-line max-len
       }
     }
   }
 
-  const clientEventsPath = path.join(__dirname, 'events/client');
-  const clientEventFiles = fs.readdirSync(clientEventsPath).filter(
-    (file) => file.endsWith('.js') || file.endsWith('.ts')
-  );
+  const eventsPath = path.join(__dirname, 'events/client');
+  const eventFiles = fs
+    .readdirSync(eventsPath)
+    .filter(file => file.endsWith('.js') || file.endsWith('.ts'));
 
-  for (const file of clientEventFiles) {
-    const filePath = path.join(clientEventsPath, file);
+  for (const file of eventFiles) {
+    const filePath = path.join(eventsPath, file);
     const { default: event } = await import(filePath);
 
     if (event.once) {
@@ -51,27 +51,6 @@ const client = new Client({
       client.on(event.name, (...args) => event.execute(...args));
     }
   }
-
-
-  // NOTE: below code should be able to handle player event files once player is implemented properly
- 
-  // const playerEventsPath = path.join(__dirname, 'events/player');
-  // const playerEventFiles = fs.readdirSync(playerEventsPath).filter(
-  //   (file) => file.endsWith('.js') || file.endsWith('.ts')
-  // );
-  //
-  // for (const file of playerEventFiles) {
-  //   const filePath = path.join(playerEventsPath, file);
-  //   const { default: event } = await import(filePath);
-  //
-  //   if (event.once) {
-  //     player.once(event.name, (...args) => event.execute(...args));
-  //   } else {
-  //     player.on(event.name, (...args) => event.execute(...args));
-  //   }
-  // }
 })();
-
-
 
 client.login(process.env.TOKEN);

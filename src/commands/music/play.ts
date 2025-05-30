@@ -7,11 +7,11 @@ import {
 import {
   DiscordGatewayAdapterCreator,
   joinVoiceChannel,
-  createAudioPlayer,
   createAudioResource
 } from "@discordjs/voice";
 import ytdl from "@distube/ytdl-core";
 import yts from 'yt-search';
+import { getPlayer } from "../../player/playerManager.js";
 
 export default {
   data: new SlashCommandBuilder()
@@ -70,7 +70,7 @@ export default {
     // NOTE: this should happen somewhere else
     // const connection = getVoiceConnection(interaction.guildId);
 
-    const player = createAudioPlayer();
+    const player = await getPlayer(interaction.guildId);
 
     // reads url and creates a readable stream that only contains audio
     const stream = ytdl(results.videos[0].url, {
