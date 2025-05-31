@@ -92,7 +92,6 @@ export default {
     const player = await getPlayer(interaction.guildId);
     const queue = getQueue(interaction.guildId);
     queue.push(track);
-    console.log(queue.length);
 
     if (
       player.state.status === AudioPlayerStatus.Idle &&

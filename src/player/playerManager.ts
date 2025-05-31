@@ -44,7 +44,10 @@ async function attachPlayerEvents(player: AudioPlayer) {
     const { default: event }: { default: PlayerEvent<keyof PlayerEventArgs> } =
       await import(filePath);
 
-    if (!event) return console.log(chalk.yellowBright('[WARNING]'), `The player event at "${filePath}" is undefined`); // eslint-disable-line max-len
+    if (!event) {
+      console.log(chalk.yellowBright('[WARNING]'), `The player event at "${filePath}" is undefined`); // eslint-disable-line max-len
+      continue;
+    }
     if ('name' in event && 'execute' in event) {
       handleEvent(player, event);
     } else {

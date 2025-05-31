@@ -16,9 +16,8 @@ const event: PlayerEvent<'stateChange'> = {
         resource: { metadata?: { guildId?: string } }
       }
 
-      console.log('Player is idle -> playing next track');
       const guildId = (oldState as ExtendedPlayerState).resource.metadata?.guildId;
-      if (!guildId) return console.log('guildId not found, returning'); console.log(oldState);
+      if (!guildId) return console.log('guildId not found, returning');
 
       const player = await getPlayer(guildId);
       const queue = getQueue(guildId);
