@@ -16,6 +16,7 @@ const event: PlayerEvent<'stateChange'> = {
         resource: { metadata?: { guildId?: string } }
       }
 
+      console.log('[Player] Playing --> Idle, Playing next track');
       const guildId = (oldState as ExtendedPlayerState).resource.metadata?.guildId;
       if (!guildId) return console.log('guildId not found, returning');
 
@@ -30,7 +31,7 @@ const event: PlayerEvent<'stateChange'> = {
         });
         player.play(resource);
       } else {
-        console.log('queue empty');
+        console.log('queue empty:');
       }
     }
   }

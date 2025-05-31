@@ -9,5 +9,5 @@
 // };
 //
 // export default event;
-
+//
 // NOTE: This is an example for the player events

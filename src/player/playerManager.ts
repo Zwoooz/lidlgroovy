@@ -3,6 +3,7 @@ import {
   AudioPlayer,
   AudioPlayerError,
   AudioPlayerStatus,
+  AudioPlayerState,
 } from "@discordjs/voice";
 import fs from 'node:fs';
 import path from "node:path";
@@ -25,6 +26,8 @@ function handleEvent<K extends EventName>(
 ) {
   if (event.name === 'error') {
     player.on('error', event.execute as (...args: [AudioPlayerError]) => void);
+  } else if (event.name === 'stateChange') {
+    player.on('stateChange', event.execute as (old: AudioPlayerState, next: AudioPlayerState) => void); // eslint-disable-line max-len
   } else {
     player.on(event.name as AudioPlayerStatus, (...args: []) => {
       (event.execute as (...args: []) => void)(...args);
