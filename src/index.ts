@@ -2,11 +2,19 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import 'dotenv/config';
-import { Client, Collection } from 'discord.js';
+import {
+  Client,
+  Collection,
+  ActivityType
+} from 'discord.js';
 
 const client = new Client({
   intents: ['Guilds', 'GuildMessages', 'GuildMembers', 'MessageContent', 'GuildVoiceStates'],
+  presence: {
+    activities: [{ name: '/play', type: ActivityType.Listening }]
+  }
 });
+
 
 (async () => {
   client.commands = new Collection();

@@ -1,6 +1,7 @@
 import {
   AudioPlayerStatus,
   AudioPlayerError,
+  AudioPlayerState
 } from '@discordjs/voice';
 
 export interface PlayerEventArgs {
@@ -9,7 +10,8 @@ export interface PlayerEventArgs {
   [AudioPlayerStatus.Paused]: [];
   [AudioPlayerStatus.AutoPaused]: [];
   [AudioPlayerStatus.Buffering]: [];
-  error: [error: AudioPlayerError]
+  stateChange: [oldState: AudioPlayerState, newState: AudioPlayerState];
+  error: [error: AudioPlayerError],
 }
 
 export interface PlayerEvent<K extends keyof PlayerEventArgs> {

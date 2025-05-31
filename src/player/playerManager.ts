@@ -15,6 +15,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const playerMap = new Map<string, AudioPlayer>();
+const playerGuildMap = new Map<AudioPlayer, string>();
 
 type EventName = keyof PlayerEventArgs;
 
@@ -59,7 +60,12 @@ export async function getPlayer(guildId: string): Promise<AudioPlayer> {
     player = createAudioPlayer();
     await attachPlayerEvents(player);
     playerMap.set(guildId, player);
+    playerGuildMap.set(player, guildId);
   }
 
   return player;
+}
+
+export function getGuildIdFromPlayer(player: AudioPlayer): string | undefined {
+  return playerGuildMap.get(player);
 }
