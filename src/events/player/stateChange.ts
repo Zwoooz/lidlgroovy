@@ -31,7 +31,7 @@ const event: PlayerEvent<'stateChange'> = {
           highWaterMark: 1 << 25 // 32MB buffer
         });
         const resource = createAudioResource(stream, {
-          metadata: { guildId: nextTrack.guildId }
+          metadata: nextTrack
         });
         player.play(resource);
       } else {

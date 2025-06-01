@@ -59,10 +59,15 @@ async function attachPlayerEvents(player: AudioPlayer) {
   }
 }
 
-export async function getPlayer(guildId: string): Promise<AudioPlayer> {
+// overload signatures
+export async function getPlayer(guildId: string, createNew: true): Promise<AudioPlayer>;
+export async function getPlayer(guildId: string, createNew: false): Promise<AudioPlayer | undefined>;
+export async function getPlayer(guildId: string): Promise<AudioPlayer>;
+
+export async function getPlayer(guildId: string, createNew?: boolean): Promise<AudioPlayer | undefined> {
   let player = playerMap.get(guildId);
 
-  if (!player) {
+  if (!player && !createNew) {
     player = createAudioPlayer();
     await attachPlayerEvents(player);
     playerMap.set(guildId, player);

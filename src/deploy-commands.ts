@@ -1,3 +1,4 @@
+import chalk from 'chalk';
 import { REST, type RESTPostAPIApplicationCommandsJSONBody, Routes } from 'discord.js';
 import 'dotenv/config';
 import fs from 'node:fs';
@@ -33,6 +34,9 @@ const commands: RESTPostAPIApplicationCommandsJSONBody[] = [];
 
   try {
     console.log(`Started refreshing ${commands.length} application (/) commands.`);
+    commands.forEach(command => {
+      console.log(chalk.green('[COMMANDS]'), 'Adding:', '/' + command.name);
+    });
     const data = await rest.put(
       Routes.applicationCommands(process.env.clientId),
       { body: commands },

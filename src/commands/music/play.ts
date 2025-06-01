@@ -30,7 +30,7 @@ import type { Track } from "../../types/track.js";
 export default {
   data: new SlashCommandBuilder()
     .setName('play')
-    .setDescription('Searches for and plays song/video')
+    .setDescription('Searches for and plays track/video')
     .addStringOption((option) => option.setName('query')
       .setDescription('YouTube link or search string')
       .setRequired(true)),
@@ -116,7 +116,7 @@ export default {
           highWaterMark: 1 << 25 // 32MB buffer
         });
         const resource = createAudioResource(stream, {
-          metadata: { guildId: interaction.guildId }
+          metadata: firstTrack
         });
         player.play(resource);
       }
