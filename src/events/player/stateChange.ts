@@ -25,7 +25,11 @@ const event: PlayerEvent<'stateChange'> = {
       const nextTrack = queue.shift();
 
       if (nextTrack) {
-        const stream = ytdl(nextTrack.url);
+        const stream = ytdl(nextTrack.url, {
+          filter: 'audioonly',
+          dlChunkSize: 0,
+          highWaterMark: 1 << 25 // 32MB buffer
+        });
         const resource = createAudioResource(stream, {
           metadata: { guildId: nextTrack.guildId }
         });
