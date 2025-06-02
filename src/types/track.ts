@@ -1,6 +1,6 @@
 export interface Track {
   url: string;
-  title: string;
+  title: string | undefined;
   guildId: string;
   requestedBy: string;
   thumbnail: string;

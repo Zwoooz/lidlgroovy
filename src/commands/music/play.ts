@@ -18,6 +18,7 @@ import {
 // YouTube packages
 import ytdl from "@distube/ytdl-core";
 import yts from 'yt-search';
+import play from 'play-dl';
 
 // internal managers
 import { getPlayer } from "../../player/playerManager.js";
@@ -69,15 +70,18 @@ export default {
     // replies to the before doing anything that will take time as we only have 3 seconds to respond
     await interaction.reply({ content: `Searching YouTube for \`${query}\` ...` });
 
+    console.time('yts');
     // searches youtube for the query and edits the previous reply
-    const result = (await yts(query)).videos[0];
+    const search = await play.search(query, { limit: 1 });
+    const result = search[0];
+    console.timeEnd('yts');
 
     // creates a track from the video
     const track: Track = {
       url: result.url,
       title: result.title,
-      thumbnail: result.thumbnail,
-      duration: result.timestamp,
+      thumbnail: result.thumbnails[0].url,
+      duration: result.durationRaw,
       guildId: interaction.guildId,
       requestedBy: interaction.user.username,
       textChannelId: interaction.channelId,
