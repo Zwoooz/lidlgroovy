@@ -1,10 +1,11 @@
 import { AudioPlayerState, AudioPlayerStatus, createAudioResource } from "@discordjs/voice";
 import { PlayerEvent } from "../../types/playerEvent.js";
-import { getPlayer } from "../../player/playerManager.js";
-import { getQueue } from "../../player/queueManager.js";
+import { getPlayer, playerMap } from "../../player/playerManager.js";
+import { getQueue, queueMap } from "../../player/queueManager.js";
 import ytdl from "@distube/ytdl-core";
 import { EmbedBuilder, TextChannel } from "discord.js";
 import client from "../../index.js";
+import { getConnection } from "../../player/connectionManager.js";
 
 const event: PlayerEvent<'stateChange'> = {
   name: 'stateChange',
@@ -45,7 +46,12 @@ const event: PlayerEvent<'stateChange'> = {
         const channel = await client.channels.fetch(nextTrack.textChannelId) as TextChannel;
         return await channel.send({ content: '', embeds: [nowPlayingEmbed] });
       } else {
-        console.log('queue empty:');
+        const connection = getConnection(guildId);
+
+        connection?.destroy();
+        playerMap.delete(guildId);
+        queueMap.delete(guildId);
+        console.log('[stateChange] queue empty, destroying player and connection');
       }
     }
   }

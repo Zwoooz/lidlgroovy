@@ -5,6 +5,7 @@
   "license": "ISC",
   "author": "Zwoooz",
   "type": "module",
+  "engines": ">=18.0.0",
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",

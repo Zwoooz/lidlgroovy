@@ -15,7 +15,7 @@ import { PlayerEvent, PlayerEventArgs } from "../types/playerEvent.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const playerMap = new Map<string, AudioPlayer>();
+export const playerMap = new Map<string, AudioPlayer>();
 const playerGuildMap = new Map<AudioPlayer, string>();
 
 type EventName = keyof PlayerEventArgs;
