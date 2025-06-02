@@ -1,6 +1,7 @@
 // discord.js core
 import {
   ChatInputCommandInteraction,
+  EmbedBuilder,
   GuildMember,
   MessageFlags,
   SlashCommandBuilder
@@ -70,7 +71,6 @@ export default {
 
     // searches youtube for the query and edits the previous reply
     const result = (await yts(query)).videos[0];
-    await interaction.editReply(result.url);
 
     // creates a track from the video
     const track: Track = {
@@ -80,6 +80,7 @@ export default {
       duration: result.timestamp,
       guildId: interaction.guildId,
       requestedBy: interaction.user.username,
+      textChannelId: interaction.channelId,
     };
 
     const player = await getPlayer(interaction.guildId);
@@ -119,7 +120,19 @@ export default {
           metadata: firstTrack
         });
         player.play(resource);
+
+        const nowPlayingEmbed = new EmbedBuilder()
+          .setTitle('Now playing:')
+          .setDescription(`[**${firstTrack.title}**](${firstTrack.url})`)
+          .setThumbnail(firstTrack.thumbnail)
+          .setColor([219, 177, 17]);
+
+        return await interaction.editReply({ content: '', embeds: [nowPlayingEmbed] });
       }
     }
+    await interaction.editReply(`\`${result.title}\` added to queue`);
+    setTimeout(async () => {
+      return await interaction.deleteReply().catch(console.error);
+    }, 3000);
   }
 };

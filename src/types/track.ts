@@ -5,4 +5,5 @@ export interface Track {
   requestedBy: string;
   thumbnail: string;
   duration: string;
+  textChannelId: string;
 }

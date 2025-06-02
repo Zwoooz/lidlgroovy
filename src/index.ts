@@ -61,4 +61,6 @@ const client = new Client({
   }
 })();
 
+export default client;
+
 client.login(process.env.TOKEN);

@@ -3,6 +3,8 @@ import { PlayerEvent } from "../../types/playerEvent.js";
 import { getPlayer } from "../../player/playerManager.js";
 import { getQueue } from "../../player/queueManager.js";
 import ytdl from "@distube/ytdl-core";
+import { EmbedBuilder, TextChannel } from "discord.js";
+import client from "../../index.js";
 
 const event: PlayerEvent<'stateChange'> = {
   name: 'stateChange',
@@ -34,6 +36,14 @@ const event: PlayerEvent<'stateChange'> = {
           metadata: nextTrack
         });
         player.play(resource);
+        const nowPlayingEmbed = new EmbedBuilder()
+          .setTitle('Now playing:')
+          .setDescription(`[**${nextTrack.title}**](${nextTrack.url})`)
+          .setThumbnail(nextTrack.thumbnail)
+          .setColor([219, 177, 17]);
+
+        const channel = await client.channels.fetch(nextTrack.textChannelId) as TextChannel;
+        return await channel.send({ content: '', embeds: [nowPlayingEmbed] });
       } else {
         console.log('queue empty:');
       }

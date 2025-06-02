@@ -1,6 +1,6 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
 import { getPlayer } from "../../player/playerManager.js";
-import { AudioPlayerPlayingState, AudioPlayerStatus } from "@discordjs/voice";
+import { AudioPlayerStatus } from "@discordjs/voice";
 import type { Track } from "../../types/track.js";
 
 
@@ -20,8 +20,7 @@ export default {
       return interaction.reply('Nothing is playing');
     }
 
-    const state = player.state as AudioPlayerPlayingState;
-    const track = state.resource.metadata as Track;
+    const track = player.state.resource.metadata as Track;
     interaction.reply(`Skipping \`${track.title}\``);
 
     player.stop();
