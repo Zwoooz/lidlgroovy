@@ -17,7 +17,6 @@ import {
 
 // YouTube packages
 import ytdl from "@distube/ytdl-core";
-import yts from 'yt-search';
 import play from 'play-dl';
 
 // internal managers
