@@ -17,7 +17,7 @@ export default {
     const player = await getPlayer(interaction.guildId, false);
 
     if (!player || player.state.status === AudioPlayerStatus.Idle) {
-      return interaction.reply('Nothing is playing');
+      return interaction.reply('Nothing is playing!');
     }
 
     const track = player.state.resource.metadata as Track;
