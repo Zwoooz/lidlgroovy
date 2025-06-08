@@ -69,11 +69,9 @@ export default {
     // replies to the before doing anything that will take time as we only have 3 seconds to respond
     await interaction.reply({ content: `Searching YouTube for \`${query}\` ...` });
 
-    console.time('yts');
     // searches youtube for the query and edits the previous reply
     const search = await play.search(query, { limit: 1 });
     const result = search[0];
-    console.timeEnd('yts');
 
     // creates a track from the video
     const track: Track = {

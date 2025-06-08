@@ -9,14 +9,14 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "tsc",
+    "clean": "rimraf dist",
+    "build": "npm run clean && tsc",
     "start": "node ."
   },
   "devDependencies": {
     "@eslint/js": "^9.27.0",
     "@tsconfig/node24": "^24.0.1",
     "eslint": "^9.27.0",
-    "tsup": "^8.5.0",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.32.1"
@@ -30,6 +30,6 @@
     "dotenv": "^16.5.0",
     "libsodium-wrappers": "^0.7.15",
     "play-dl": "^1.9.7",
-    "yt-search": "^2.13.1"
+    "rimraf": "^6.0.1"
   }
 }
