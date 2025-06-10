@@ -11,6 +11,7 @@ import {
 
 import { Player } from 'discord-player';
 import { DefaultExtractors } from '@discord-player/extractor';
+import { YoutubeiExtractor } from 'discord-player-youtubei';
 
 const client = new Client({
   intents: [
@@ -29,6 +30,7 @@ const client = new Client({
 // @ts-expect-error | for some reason the Player doesn't accept the Client type (even non-augmented)
 const player = new Player(client);
 
+await player.extractors.register(YoutubeiExtractor, {});
 await player.extractors.loadMulti(DefaultExtractors);
 
 
