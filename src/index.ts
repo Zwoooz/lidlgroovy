@@ -34,6 +34,7 @@ await player.extractors.register(YoutubeiExtractor, {});
 await player.extractors.loadMulti(DefaultExtractors);
 
 
+// client commands
 client.commands = new Collection();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -61,21 +62,40 @@ for (const folder of commandFolders) {
   }
 }
 
-const eventsPath = path.join(__dirname, 'events/client');
-const eventFiles = fs
-  .readdirSync(eventsPath)
+// client events
+const clientEventsDir = path.join(__dirname, 'events/client');
+const clientEventFiles = fs
+  .readdirSync(clientEventsDir)
   .filter(file => file.endsWith('.js') || file.endsWith('.ts'));
 
-for (const file of eventFiles) {
-  const filePath = path.join(eventsPath, file);
-  const { default: event } = await import(filePath);
+for (const file of clientEventFiles) {
+  const filePath = path.join(clientEventsDir, file);
+  const { default: clientEvent } = await import(filePath);
 
-  if (event.once) {
-    client.once(event.name, (...args) => event.execute(...args));
+  if (clientEvent.once) {
+    client.once(clientEvent.name, (...args) => clientEvent.execute(...args));
   } else {
-    client.on(event.name, (...args) => event.execute(...args));
+    client.on(clientEvent.name, (...args) => clientEvent.execute(...args));
   }
 }
+
+
+// player events
+const playerEventsDir = path.join(__dirname, 'events/player');
+const playerEventFiles = fs
+  .readdirSync(playerEventsDir)
+  .filter(file => file.endsWith('.js') || file.endsWith('.ts'));
+
+for (const file of playerEventFiles) {
+  const filePath = path.join(playerEventsDir, file);
+  const { default: playerEvent } = await import(filePath);
+
+  // TODO: check unknown type here, find correct types
+  player.events.on(playerEvent.name, (...args: unknown[]) => playerEvent.execute(...args));
+}
+
+
+
 
 export default client;
 

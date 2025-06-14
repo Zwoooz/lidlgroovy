@@ -1,12 +1,9 @@
-import { AudioPlayerError } from "@discordjs/voice";
-import { PlayerEvent } from "../../types/playerEvent.js";
-import chalk from "chalk";
+import { GuildQueueEvent, type GuildQueue } from "discord-player";
 
-const event: PlayerEvent<'error'> = {
-  name: 'error',
-  execute: (error: AudioPlayerError) => {
-    console.error(chalk.red('[Player Error]'), error.message);
+export default {
+  name: GuildQueueEvent.Error,
+  execute: (queue: GuildQueue, error: Error) => {
+    console.log(`General player error event: ${error.message}`);
+    console.log(error);
   }
 };
-
-export default event;
