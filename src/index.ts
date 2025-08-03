@@ -81,18 +81,18 @@ for (const file of clientEventFiles) {
 
 
 // player events
-const playerEventsDir = path.join(__dirname, 'events/player');
-const playerEventFiles = fs
-  .readdirSync(playerEventsDir)
-  .filter(file => file.endsWith('.js') || file.endsWith('.ts'));
-
-for (const file of playerEventFiles) {
-  const filePath = path.join(playerEventsDir, file);
-  const { default: playerEvent } = await import(filePath);
-
-  // TODO: check unknown type here, find correct types
-  player.events.on(playerEvent.name, (...args: unknown[]) => playerEvent.execute(...args));
-}
+// const playerEventsDir = path.join(__dirname, 'events/player');
+// const playerEventFiles = fs
+//   .readdirSync(playerEventsDir)
+//   .filter(file => file.endsWith('.js') || file.endsWith('.ts'));
+//
+// for (const file of playerEventFiles) {
+//   const filePath = path.join(playerEventsDir, file);
+//   const { default: playerEvent } = await import(filePath);
+//
+//   // TODO: check unknown type here, find correct types
+//   player.events.on(playerEvent.name, (...args: unknown[]) => playerEvent.execute(...args));
+// }
 
 
 

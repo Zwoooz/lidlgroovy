@@ -1,9 +1,6 @@
 import { EmbedBuilder } from "@discordjs/builders";
 import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
-import { getQueue } from "../../player/queueManager.js";
-import { getPlayer } from "../../player/playerManager.js";
-import { AudioPlayerStatus } from "@discordjs/voice";
-import { Track } from "../../types/track.js";
+import { Track, useQueue } from "discord-player";
 
 
 export default {
@@ -17,41 +14,49 @@ export default {
       return interaction.reply('This command can only be run in a server');
     }
 
-    const player = await getPlayer(interaction.guildId, false);
+    const queue = useQueue(interaction.guildId);
 
-    if (!player || player.state.status === AudioPlayerStatus.Idle) {
+    if (!queue) {
       return interaction.reply('Nothing is playing');
     }
 
-
-    const nowPlaying = player.state.resource.metadata as Track;
-
+    const nowPlaying = queue.currentTrack!;
 
     const queueEmbed = new EmbedBuilder()
       .setTitle('Now playing:')
       .setDescription(`[**${nowPlaying.title}**](${nowPlaying.url})`)
-      .setThumbnail(nowPlaying.thumbnail)
       .setColor([219, 177, 17]);
+    if (nowPlaying.thumbnail) {
+      queueEmbed.setThumbnail(nowPlaying.thumbnail);
+    };
 
-    const queue = getQueue(interaction.guildId);
+    const upNext = queue.tracks.slice(0, 5);
+    const embedMessage = [];
+    if (upNext) {
 
-    if (queue.length) {
-      const queueArr: string[] = [];
-
-
-      for (let i = 0; i < 5; i++) {
-        if (!queue[i]) break;
-        queueArr.push(`**${i + 1}**: [${queue[i].title}](${queue[i].url})`);
-      }
-
-      const queueString = queueArr.join('\n');
-
-      queueEmbed.addFields({ name: 'Up next:', value: queueString });
-
-      if (queue.length > 5) {
-        queueEmbed.setFooter({ text: `And ${queue.length - queueArr.length} other item(s)` });
-      }
+      upNext.forEach((track: Track, index: number) => {
+        embedMessage.push(`${index + 1}. ${track.title}`);
+      });
+      embedMessage.join('\n');
     }
+
+    // if (queue.length) {
+    //   const queueArr: string[] = [];
+    //
+    //
+    //   for (let i = 0; i < 5; i++) {
+    //     if (!queue[i]) break;
+    //     queueArr.push(`**${i + 1}**: [${queue[i].title}](${queue[i].url})`);
+    //   }
+    //
+    //   const queueString = queueArr.join('\n');
+    //
+    //   queueEmbed.addFields({ name: 'Up next:', value: queueString });
+    //
+    //   if (queue.length > 5) {
+    //     queueEmbed.setFooter({ text: `And ${queue.length - queueArr.length} other item(s)` });
+    //   }
+    // }
     await interaction.reply({ embeds: [queueEmbed] });
   }
 };
