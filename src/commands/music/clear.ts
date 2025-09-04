@@ -1,7 +1,5 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
-import { getPlayer } from "../../player/playerManager.js";
 import { AudioPlayerStatus } from "@discordjs/voice";
-import { getQueue, queueMap } from "../../player/queueManager.js";
 
 
 export default {

@@ -112,4 +112,4 @@ for (const file of playerEventFiles) {
 
 export default client;
 
-client.login(process.env.TOKEN_DEV);
+client.login(process.env.TOKEN);
