@@ -1,29 +1,33 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
-import { AudioPlayerStatus } from "@discordjs/voice";
+import { useQueue } from "discord-player";
 
 
 export default {
   data: new SlashCommandBuilder()
     .setName('clear')
-    .setDescription('Clears the queue and stops playback.'),
+    .setDescription('Clears the queue and stops playback'),
 
   async execute(interaction: ChatInputCommandInteraction) {
-
     if (!interaction.inGuild()) {
       return interaction.reply('This command can only be run in a server');
     }
 
-    const player = await getPlayer(interaction.guildId, false);
+    const queue = useQueue(interaction.guildId);
 
-    if (!player || player.state.status === AudioPlayerStatus.Idle) {
-      return interaction.reply('Nothing is playing!');
+    if (!queue) {
+      return interaction.reply('This server does not have an active player session.');
     }
 
-    const queue = getQueue(interaction.guildId);
+    if (!queue.isPlaying()) {
+      return interaction.reply('There is no track playing.');
+    }
 
-    await interaction.reply(`Cleared \`${queue.length}\` tracks from the queue!`);
+    queue.delete();
 
-    queueMap.delete(interaction.guildId);
-    player.stop();
+    interaction.reply('The queue has been deleted!');
+
+    setTimeout(async () => {
+      return await interaction.deleteReply().catch(console.error);
+    }, 3000);
   }
 };

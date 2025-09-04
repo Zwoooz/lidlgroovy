@@ -1,7 +1,7 @@
-import { GuildQueue } from "discord-player";
+import { GuildQueue, GuildQueueEvent } from "discord-player";
 
 export default {
-  name: 'playerError',
+  name: GuildQueueEvent.PlayerError,
   execute(queue: GuildQueue, error: Error) {
     console.log(`Audio player error event: ${error.message}`);
     console.log(error);

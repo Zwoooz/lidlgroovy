@@ -1,7 +1,7 @@
-import { GuildQueue } from "discord-player";
+import { GuildQueue, GuildQueueEvent } from "discord-player";
 
 export default {
-  name: 'error',
+  name: GuildQueueEvent.Error,
   execute(queue: GuildQueue, error: Error) {
     console.log(`General player error event: ${error.message}`);
     console.log(error);

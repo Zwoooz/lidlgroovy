@@ -56,7 +56,7 @@ export default {
       const result = await player.play(
         (interaction.member as GuildMember).voice.channelId!, query, {
         nodeOptions: {
-          metadata: { interaction } satisfies Metadata,
+          metadata: { interaction } as Metadata,
         },
       });
 
