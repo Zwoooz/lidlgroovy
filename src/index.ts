@@ -12,7 +12,6 @@ import {
 import { Player } from 'discord-player';
 import { DefaultExtractors } from '@discord-player/extractor';
 import { YoutubeiExtractor } from 'discord-player-youtubei';
-
 const client = new Client({
   intents: [
     'Guilds',
@@ -30,7 +29,17 @@ const client = new Client({
 // @ts-expect-error | for some reason the Player doesn't accept the Client type (even non-augmented)
 const player = new Player(client);
 
-await player.extractors.register(YoutubeiExtractor, {});
+
+await player.extractors.register(YoutubeiExtractor, {
+  innertubeConfigRaw: {
+    debug: false,
+    enable_session_cache: true,
+  },
+  ignoreSignInErrors: true,
+  streamOptions: {
+    useClient: "WEB"
+  }
+});
 await player.extractors.loadMulti(DefaultExtractors);
 
 
@@ -81,22 +90,26 @@ for (const file of clientEventFiles) {
 
 
 // player events
-// const playerEventsDir = path.join(__dirname, 'events/player');
-// const playerEventFiles = fs
-//   .readdirSync(playerEventsDir)
-//   .filter(file => file.endsWith('.js') || file.endsWith('.ts'));
-//
-// for (const file of playerEventFiles) {
-//   const filePath = path.join(playerEventsDir, file);
-//   const { default: playerEvent } = await import(filePath);
-//
-//   // TODO: check unknown type here, find correct types
-//   player.events.on(playerEvent.name, (...args: unknown[]) => playerEvent.execute(...args));
-// }
+const playerEventsDir = path.join(__dirname, 'events/player');
+const playerEventFiles = fs
+  .readdirSync(playerEventsDir)
+  .filter(file => file.endsWith('.js') || file.endsWith('.ts'));
+
+for (const file of playerEventFiles) {
+  const filePath = path.join(playerEventsDir, file);
+  const { default: playerEvent } = await import(filePath);
+
+  if (playerEvent && 'name' in playerEvent && 'execute' in playerEvent) {
+    // TODO: check unknown type here, find correct types
+    player.events.on(playerEvent.name, (...args: unknown[]) => playerEvent.execute(...args));
+  } else {
+    console.log(`[WARNING] The player event at "${filePath}" is missing a required "name" or "execute" property.`); // eslint-disable-line max-len
+  }
+}
 
 
 
 
 export default client;
 
-client.login(process.env.TOKEN);
+client.login(process.env.TOKEN_DEV);

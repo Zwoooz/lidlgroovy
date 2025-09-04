@@ -30,33 +30,16 @@ export default {
       queueEmbed.setThumbnail(nowPlaying.thumbnail);
     };
 
-    const upNext = queue.tracks.slice(0, 5);
-    const embedMessage = [];
-    if (upNext) {
+    const upNext = queue.tracks.data.slice(0, 5);
+    const embedMessage: string[] = [];
+    if (upNext.length > 0) {
 
       upNext.forEach((track: Track, index: number) => {
-        embedMessage.push(`${index + 1}. ${track.title}`);
+        embedMessage.push(`${index + 1}. [${track.title}](${track.url})`);
       });
-      embedMessage.join('\n');
+      const embedMessageString = embedMessage.join('\n');
+      queueEmbed.addFields({ name: 'Up next:', value: embedMessageString });
     }
-
-    // if (queue.length) {
-    //   const queueArr: string[] = [];
-    //
-    //
-    //   for (let i = 0; i < 5; i++) {
-    //     if (!queue[i]) break;
-    //     queueArr.push(`**${i + 1}**: [${queue[i].title}](${queue[i].url})`);
-    //   }
-    //
-    //   const queueString = queueArr.join('\n');
-    //
-    //   queueEmbed.addFields({ name: 'Up next:', value: queueString });
-    //
-    //   if (queue.length > 5) {
-    //     queueEmbed.setFooter({ text: `And ${queue.length - queueArr.length} other item(s)` });
-    //   }
-    // }
     await interaction.reply({ embeds: [queueEmbed] });
   }
 };

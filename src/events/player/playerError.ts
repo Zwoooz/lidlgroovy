@@ -1,14 +1,14 @@
 import { GuildQueue } from "discord-player";
 
 export default {
-  name: 'error',
+  name: 'playerError',
   execute(queue: GuildQueue, error: Error) {
-    console.log(`General player error event: ${error.message}`);
+    console.log(`Audio player error event: ${error.message}`);
     console.log(error);
 
     if (process.env.devId) {
       queue.player.client.users.send(process.env.devId, `
-        General player error event:\`\`\`Message: ${error.message}\n\nError: ${error}\`\`\`
+        Audio player error:\`\`\`Message: ${error.message}\n\nError: ${error}\`\`\`
       `);
     }
   }

@@ -8,6 +8,7 @@ import {
 
 // discord-player
 import { useMainPlayer } from "discord-player";
+import { Metadata } from "../../types/metadata.js";
 
 
 export default {
@@ -55,7 +56,7 @@ export default {
       const result = await player.play(
         (interaction.member as GuildMember).voice.channelId!, query, {
         nodeOptions: {
-          metadata: { interaction },
+          metadata: { interaction } satisfies Metadata,
         },
       });
 
