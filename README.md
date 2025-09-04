@@ -34,6 +34,7 @@ Create a `.env` file in the root directory with the following contents:
 
 ```.env
 TOKEN=YOUR_BOT_TOKEN_HERE
+clientId=YOUR_BOT_CLIENT_ID_HERE
 ```
 
 To be able to send commands to the bot you need to register them with Discord using an API call. This is done by running the following in the root directory:
