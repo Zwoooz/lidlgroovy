@@ -6,5 +6,6 @@ declare namespace NodeJS {
     devClientId: string;
     devId: string;
     guildId: string;
+    RAIDERIO_TOKEN: string;
   }
 }
