@@ -1,5 +1,5 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
-import { Api } from "../../api/raiderio-api.js";
+import { Api } from "../../api/raiderioApi.js";
 
 export default {
   data: new SlashCommandBuilder()
