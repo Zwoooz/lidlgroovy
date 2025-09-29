@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
+import { ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import { raiderioService } from "../../services/raiderioService.js";
 
 export default {
@@ -34,13 +34,21 @@ export default {
     // reply before fetching raiderIO data
     await interaction.reply({ content: `Searching RaiderIO for \`${name}-${realm}\` ...` });
 
-    const response = await raiderioService.getCharacterProfile(region, realm, name);
+    const response = await raiderioService.getCharacterProfile({
+      region: region,
+      realm: realm,
+      name: name
+    });
 
     if (!response.success) {
       return await interaction.editReply({
         content: response.userFriendlyError || 'Something went wrong!'
       });
     }
+
+    const embed = new EmbedBuilder({
+      thumbnail = 
+    })
 
     await interaction.editReply({ content: 'Fetching done, check console log output' });
     console.log(await response.data.json());

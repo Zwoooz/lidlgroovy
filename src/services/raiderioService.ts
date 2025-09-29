@@ -49,18 +49,10 @@ class RaiderioService {
   }
 
   async getCharacterProfile(
-    region: string,
-    realm: string,
-    name: string,
-    fields?: string[]
-  ): Promise<ServiceResponse<any>> {
+    params: Omit<GetApiV1CharactersProfileParams, 'access_key'>
+  ) {
     try {
-      const character = await this.api.v1.getApiV1CharactersProfile({
-        region: region.toLowerCase(),
-        realm: realm,
-        name: name,
-        fields: fields || ['mythic_plus_best_runs']
-      });
+      const character = await this.api.v1.getApiV1CharactersProfile({ ...params });
 
       return {
         success: true,
