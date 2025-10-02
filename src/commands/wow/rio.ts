@@ -94,7 +94,6 @@ export default {
       },
     );
 
-    console.dir(response.data, { depth: null });
     return await interaction.editReply({ content: '', embeds: [embed] });
   }
 };
