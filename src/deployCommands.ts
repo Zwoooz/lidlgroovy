@@ -29,7 +29,7 @@ for (const folder of commandFolders) {
   }
 }
 
-const rest = new REST().setToken(process.env.TOKEN_DEV);
+const rest = new REST().setToken(process.env.TOKEN);
 
 try {
   console.log(`Started refreshing ${commands.length} application (/) commands.`);
@@ -37,7 +37,7 @@ try {
     console.log(chalk.green('[COMMANDS]'), 'Adding:', '/' + command.name);
   });
   const data = await rest.put(
-    Routes.applicationCommands(process.env.devClientId),
+    Routes.applicationCommands(process.env.clientId),
     { body: commands },
   ) as RESTPostAPIApplicationCommandsJSONBody[];
   console.log(`Successfully reloaded ${data.length} application (/) commands.`);
