@@ -7,7 +7,8 @@ export default {
     console.log(error);
 
     if (process.env.devId) {
-      queue.player.client.users.send(process.env.devId, `
+      queue.player.client.users.send(
+        process.env.devId, `
         General player error event:\`\`\`Message: ${error.message}\n\nError: ${error}\`\`\`
       `);
     }

@@ -31,11 +31,6 @@ const player = new Player(client);
 
 
 await player.extractors.register(YoutubeiExtractor, {
-  innertubeConfigRaw: {
-    debug: false,
-    enable_session_cache: true,
-  },
-  ignoreSignInErrors: true,
   streamOptions: {
     useClient: "WEB"
   }

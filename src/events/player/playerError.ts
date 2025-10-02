@@ -7,7 +7,8 @@ export default {
     console.log(error);
 
     if (process.env.devId) {
-      queue.player.client.users.send(process.env.devId, `
+      queue.player.client.users.send(
+        process.env.devId, `
         Audio player error:\`\`\`Message: ${error.message}\n\nError: ${error}\`\`\`
       `);
     }

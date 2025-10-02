@@ -1,11 +1,14 @@
-import { Api, GetApiV1CharactersProfileParams, HttpResponse } from "../api/raiderioApi.js";
+import { Api, GetApiV1CharactersProfileParams, Model4 } from "../api/raiderioApi.js";
 
-interface ServiceResponse<T> {
-  success: boolean;
-  data?: T;
+interface ApiError {
+  statusCode?: number;
   error?: string;
-  userFriendlyError?: string; // Specifically if responding with discord responses
+  message: string;
 }
+
+type ServiceResponse<T> =
+  | { success: true; data: T }
+  | { success: false; error: ApiError; userFriendlyError: string };
 
 class RaiderioService {
   private api: Api<unknown>;
@@ -18,17 +21,26 @@ class RaiderioService {
     });
   }
 
-  private getDiscordFriendlyError(error: any, type: 'character' | 'guild'): string {
+  private withApiKey<T extends Record<string, unknown>>(params: T): T & { access_key: string } {
+    return {
+      ...params,
+      access_key: this.apiKey
+    };
+  }
+
+
+  private getDiscordFriendlyError(error: ApiError, type: 'character' | 'guild'): string {
     const itemType = type === 'character' ? 'Character' : 'Guild';
 
     switch (error.statusCode) {
       case 404:
         return `❌ ${itemType} not found. Check your spelling and try again.`;
       case 400:
-        return `❌ Invalid ${type} information provided. Please check region, realm, and name.`;
+        return '❌ Something went wrong, this is likely a bug';
       case 429:
         return `⏱️ Too many requests! Please wait a moment before trying again.`;
       case 500:
+        return '❌ Something went wrong on RaiderIO\'s side. Please try again later';
       case 502:
       case 503:
         return `🔧 Raider.io is having issues right now. Please try again later.`;
@@ -37,32 +49,30 @@ class RaiderioService {
     }
   }
 
-  private normalizeRealmName(realm: string): string {
-    return realm.toLowerCase()
-      .replace(/\s+/g, '-')
-      .replace(/'/g, '')
-      .replace(/[àáâãäå]/g, 'a')
-      .replace(/[èéêë]/g, 'e')
-      .replace(/[ìíîï]/g, 'i')
-      .replace(/[òóôõö]/g, 'o')
-      .replace(/[ùúûü]/g, 'u');
-  }
-
   async getCharacterProfile(
     params: Omit<GetApiV1CharactersProfileParams, 'access_key'>
-  ) {
+  ): Promise<ServiceResponse<Model4>> {
     try {
-      const character = await this.api.v1.getApiV1CharactersProfile({ ...params });
+      const response = await this.api.v1.getApiV1CharactersProfile(this.withApiKey({
+        ...params,
+      }));
+
+      const characterProfile: Model4 = await response.json() as Model4;
 
       return {
         success: true,
-        data: character
+        data: characterProfile
       };
     } catch (error) {
-      const friendlyError = this.getDiscordFriendlyError(error, 'character');
+      const apiError = await (error as Response).json() as ApiError;
+      const friendlyError = this.getDiscordFriendlyError(apiError, 'character');
       return {
         success: false,
-        error: error.message,
+        error: {
+          statusCode: apiError.statusCode,
+          error: apiError.error,
+          message: apiError.message
+        },
         userFriendlyError: friendlyError
       };
     }
