@@ -6,6 +6,11 @@ interface ApiError {
   message: string;
 }
 
+interface HTMLError {
+  status: number;
+  statusText: string;
+}
+
 type ServiceResponse<T> =
   | { success: true; data: T }
   | { success: false; error: ApiError; userFriendlyError: string };
@@ -29,10 +34,19 @@ class RaiderioService {
   }
 
 
-  private getDiscordFriendlyError(error: ApiError, type: 'character' | 'guild'): string {
+  private getDiscordFriendlyError(
+    error: ApiError | HTMLError,
+    type: 'character' | 'guild'): string {
     const itemType = type === 'character' ? 'Character' : 'Guild';
+    let statusCode: number;
 
-    switch (error.statusCode) {
+    if (!('statusCode' in error)) {
+      statusCode = (error as HTMLError).status;
+    } else {
+      statusCode = (error as ApiError).statusCode!;
+    }
+
+    switch (statusCode) {
       case 404:
         return `❌ ${itemType} not found. Check your spelling and try again.`;
       case 400:
@@ -64,17 +78,29 @@ class RaiderioService {
         data: characterProfile
       };
     } catch (error) {
-      const apiError = await (error as Response).json() as ApiError;
-      const friendlyError = this.getDiscordFriendlyError(apiError, 'character');
-      return {
-        success: false,
-        error: {
-          statusCode: apiError.statusCode,
-          error: apiError.error,
-          message: apiError.message
-        },
-        userFriendlyError: friendlyError
-      };
+      try {
+        const apiError = await (error as Response).json() as ApiError;
+        return {
+          success: false,
+          error: {
+            statusCode: apiError.statusCode,
+            error: apiError.error,
+            message: apiError.message
+          },
+          userFriendlyError: this.getDiscordFriendlyError(apiError, 'character')
+        };
+      } catch {
+        // likely got HTML response (raiderio probably down)
+        const htmlError = error as HTMLError;
+        return {
+          success: false,
+          error: {
+            statusCode: htmlError.status,
+            message: htmlError.statusText
+          },
+          userFriendlyError: this.getDiscordFriendlyError(htmlError, 'character')
+        };
+      }
     }
   }
 }
