@@ -890,6 +890,8 @@ export interface Model4 {
    * @example false
    */
   use_animated_banner?: boolean;
+  /** Raid curve - added manually*/
+  raid_achievement_curve: arrray
 }
 
 export interface Model5 {

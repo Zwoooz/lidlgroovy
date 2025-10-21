@@ -45,7 +45,7 @@ export default {
       fields: [
         'mythic_plus_scores_by_season:current',
         'raid_progression:current-tier',
-        'gear'
+        'gear',
       ].join(',')
     });
     if (!response.success) {
@@ -77,10 +77,39 @@ export default {
     if (Object.values(response.data.raid_progression!)[0].summary) {
       const raidName = Object.keys(response.data.raid_progression!)[0];
       const raidProg = Object.values(response.data.raid_progression!)[0].summary;
+      const curveResponse = await raiderioService.getCharacterProfile({
+        region: region as Region,
+        realm: realm,
+        name: name,
+        fields: `raid_achievement_curve:${raidName}`
+      });
+
+      if (!curveResponse.success) {
+        if (process.env.devId && curveResponse.error.statusCode == 400) {
+          interaction.client.users.send(
+            process.env.devId,
+            `raiderioService:\`\`\`Something went wrong on the client side:\n${JSON.stringify(curveResponse.error)}\`\`\``); //eslint-disable-line max-len
+        }
+        return await interaction.editReply({
+          content: curveResponse.userFriendlyError || 'Something went wrong!',
+        });
+      }
+
+      let curve: string = 'No curve';
+
+      if (curveResponse.data.raid_achievement_curve[0]) {
+        if (Object.values(curveResponse.data.raid_achievement_curve[0]).length == 3) {
+          curve = '[CE]';
+        } else if (Object.values(curveResponse.data.raid_achievement_curve[0]).length == 2) {
+          curve = '[AOTC]';
+        }
+      }
+
       embed.addFields({
         name: 'Raiding:',
-        value: raidName.charAt(0).toUpperCase() + raidName.slice(1) + ' ' + `\`${raidProg}\``
+        value: raidName.charAt(0).toUpperCase() + raidName.slice(1).replace('-', ' ') + ' ' + `\`${raidProg} - ${curve}\`` //eslint-disable-line max-len
       });
+
     } else {
       embed.addFields({ name: 'Raid progression:', value: 'No raid progression this tier.' });
     }
