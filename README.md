@@ -65,4 +65,4 @@ $ npm run start
 
 **That's it, your bot is now up and running, and you can start sending commands!**
 
-To invite your new bot to your servers, or if there are any other issues regarding the Discord application, refer to the [discord.js guide](https://discordjs.guide/preparations/adding-your-bot-to-servers.html)
+To invite your new bot to your servers, or if there are any other issues regarding the Discord application, refer to the [discord.js guide](https://www.discordjs.guide/legacy/preparations/adding-your-app)
