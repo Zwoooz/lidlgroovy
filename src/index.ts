@@ -40,7 +40,7 @@ await player.extractors.register(YoutubeiExtractor, {
   },
   generateWithPoToken: true,
   innertubeConfigRaw: {
-    player_id: '0004de42'
+    player_id: '27422632'
   }
 });
 await player.extractors.loadMulti(DefaultExtractors);
