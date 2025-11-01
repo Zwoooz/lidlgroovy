@@ -11,7 +11,8 @@ import {
 
 import { Player } from 'discord-player';
 import { DefaultExtractors } from '@discord-player/extractor';
-import { YoutubeiExtractor } from 'discord-player-youtubei';
+// import { YoutubeiExtractor } from 'discord-player-youtubei';
+import { YoutubeSabrExtractor } from 'discord-player-googlevideo';
 import suppressYouTubeErrors from './utils/supressYoutubeErrors.js';
 const client = new Client({
   intents: [
@@ -30,19 +31,17 @@ const client = new Client({
 // @ts-expect-error | for some reason the Player doesn't accept the Client type (even non-augmented)
 const player = new Player(client);
 
-// FIX: https://github.com/LuanRT/YouTube.js/issues/1043
-// FIX: tl;dr: providing a player id serves as a temporary fix
-// eslint-disable-next-line
-// TODO: start fetching this id from https://raw.githubusercontent.com/llama-spec/metronome-player-Extractor/refs/heads/main/cachedPlayers/latest 
-await player.extractors.register(YoutubeiExtractor, {
-  streamOptions: {
-    useClient: "WEB_EMBEDDED"
-  },
-  generateWithPoToken: true,
-  innertubeConfigRaw: {
-    player_id: '0004de42'
-  }
-});
+// Temporary use of googlevideo extractor until youtubei extractor is updated
+// await player.extractors.register(YoutubeiExtractor, {
+//   streamOptions: {
+//     useClient: "WEB_EMBEDDED"
+//   },
+//   generateWithPoToken: true,
+//   innertubeConfigRaw: {
+//     // player_id: '0004de42'
+//   }
+// });
+await player.extractors.register(YoutubeSabrExtractor, {});
 await player.extractors.loadMulti(DefaultExtractors);
 
 
