@@ -5,6 +5,8 @@
 Ever since YouTube started cracking down on Discord music bots, no publicly available bots support streaming music from YouTube anymore, often leading to not getting the track you were trying to search for. I got fed up with this and created a bot for mainly this purpose.
 
 I worked on and off on the bot leading to it becoming extremely outdated so I decided to completely rewrite it in TypeScript, with the hope of being able to maintain it better. This is that rewrite (or at least the start of it).
+>[!NOTE]
+>Temporarily only considers youtube streaming if provided a link
 
 ---
 
