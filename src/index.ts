@@ -12,8 +12,8 @@ import {
 import { Player } from 'discord-player';
 import { DefaultExtractors } from '@discord-player/extractor';
 // import { YoutubeiExtractor } from 'discord-player-youtubei';
-import { YoutubeSabrExtractor } from 'discord-player-googlevideo';
-import suppressYouTubeErrors from './utils/supressYoutubeErrors.js';
+import { YoutubeExtractor } from 'discord-player-youtube';
+// import suppressYouTubeErrors from './utils/supressYoutubeErrors.js';
 const client = new Client({
   intents: [
     'Guilds',
@@ -30,18 +30,13 @@ const client = new Client({
 
 // @ts-expect-error | for some reason the Player doesn't accept the Client type (even non-augmented)
 const player = new Player(client);
-
-// Temporary use of googlevideo extractor until youtubei extractor is updated
+// temporarily using new extractor until discord-player-youtubei gets updated
+await player.extractors.register(YoutubeExtractor, {
+  cookie: process.env.YOUTUBE_COOKIE
+})
 // await player.extractors.register(YoutubeiExtractor, {
-//   streamOptions: {
-//     useClient: "WEB_EMBEDDED"
-//   },
-//   generateWithPoToken: true,
-//   innertubeConfigRaw: {
-//     // player_id: '0004de42'
-//   }
-// });
-await player.extractors.register(YoutubeSabrExtractor, {});
+//   cookie: process.env.YOUTUBE_COOKIE
+// })
 await player.extractors.loadMulti(DefaultExtractors);
 
 
@@ -117,4 +112,4 @@ export default client;
 client.login(process.env.TOKEN);
 
 // Supress non-critical errors from youtubei.js library
-suppressYouTubeErrors();
+// suppressYouTubeErrors();
