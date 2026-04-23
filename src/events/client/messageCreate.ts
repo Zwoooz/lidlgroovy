@@ -8,7 +8,7 @@ export default {
     if (!getChannels().includes(message.channelId)) return;
 
     if (message.embeds.length > 0) {
-      await message.suppressEmbeds(true)
+      await message.suppressEmbeds(true);
     }
   }
 };

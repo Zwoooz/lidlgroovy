@@ -14,7 +14,7 @@ export default {
       removeChannel(channelId);
       await interaction.reply('Embed deletion is now **OFF**');
     } else {
-      addChannel(channelId)
+      addChannel(channelId);
       await interaction.reply('Embed deletion is now **ON**');
     }
 

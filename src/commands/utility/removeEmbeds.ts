@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, ChatInputCommandInteraction, MessageFlags } from "discord.js";
+import { SlashCommandBuilder, ChatInputCommandInteraction } from "discord.js";
 
 export default {
   data: new SlashCommandBuilder()
@@ -9,18 +9,24 @@ export default {
       .setRequired(false)),
 
   async execute(interaction: ChatInputCommandInteraction) {
-    const limit = interaction.options.getInteger('amount') ?? 100
-    const messages = await interaction.channel?.messages.fetch({ limit: limit })
-    if (!messages || messages?.size === 0) return await interaction.reply({ content: "No messages found", flags: MessageFlags.Ephemeral });
+    const limit = interaction.options.getInteger('amount') ?? 100;
 
-    let deletedCounter = 0
-    for (const message of messages?.values()) {
+    interaction.deferReply();
+
+    const messages = await interaction.channel?.messages.fetch({ limit: limit });
+    if (!messages || messages?.size === 0) {
+      return await interaction.editReply({ content: "No messages found" });
+    }
+    let deletedCounter = 0;
+    for (const message of messages.values()) {
       if (message.embeds.length > 0) {
-        await message.suppressEmbeds(true)
-        deletedCounter += 1
+        await message.suppressEmbeds(true);
+        deletedCounter += 1;
       }
     }
-    if (deletedCounter == 0) return await interaction.reply({ content: "No embeds found on messages", flags: MessageFlags.Ephemeral });
-    await interaction.reply(`Deleted \`${deletedCounter}\` embeds`)
+    if (deletedCounter == 0) {
+      return await interaction.editReply({ content: "No embeds found on messages" });
+    }
+    await interaction.editReply(`Deleted \`${deletedCounter}\` embeds`);
   }
 };

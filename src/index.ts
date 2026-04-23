@@ -33,7 +33,7 @@ const player = new Player(client);
 // temporarily using new extractor until discord-player-youtubei gets updated
 await player.extractors.register(YoutubeExtractor, {
   cookie: process.env.YOUTUBE_COOKIE
-})
+});
 // await player.extractors.register(YoutubeiExtractor, {
 //   cookie: process.env.YOUTUBE_COOKIE
 // })
