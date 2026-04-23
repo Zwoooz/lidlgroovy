@@ -11,7 +11,7 @@ export default {
   async execute(interaction: ChatInputCommandInteraction) {
     const limit = interaction.options.getInteger('amount') ?? 100
     const messages = await interaction.channel?.messages.fetch({ limit: limit })
-    if (messages?.size === 0) return await interaction.reply({ content: "No messages found", flags: MessageFlags.Ephemeral });
+    if (!messages || messages?.size === 0) return await interaction.reply({ content: "No messages found", flags: MessageFlags.Ephemeral });
 
     let deletedCounter = 0
     for (const message of messages?.values()) {
