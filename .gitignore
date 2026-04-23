@@ -40,3 +40,7 @@ dist/**/*
 
 # ignore yarn.lock
 yarn.lock
+
+# per application data
+src/data/*.json
+!/src/data/*.json.template
