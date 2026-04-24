@@ -7,5 +7,7 @@ declare namespace NodeJS {
     devId: string;
     guildId: string;
     RAIDERIO_TOKEN: string;
+    WCL_CLIENT_ID: string;
+    WCL_CLIENT_SECRET: string;
   }
 }

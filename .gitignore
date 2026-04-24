@@ -44,3 +44,6 @@ yarn.lock
 # per application data
 data/*.json
 !data/*.json.template
+
+# LSP
+.graphqlrc.yml

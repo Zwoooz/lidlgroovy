@@ -1,4 +1,4 @@
-import { Api, GetApiV1CharactersProfileParams, Model4 } from "../api/raiderioApi.js";
+import { Api, GetApiV1CharactersProfileParams, Model4 } from "../generated/raiderioApi.js";
 
 interface ApiError {
   statusCode?: number;
