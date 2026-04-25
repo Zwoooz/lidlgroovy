@@ -5,7 +5,8 @@ import {
   SlashCommandBuilder
 } from "discord.js";
 import { raiderioService } from "../../services/raiderioService.js";
-import { Region } from "../../api/raiderioApi.js";
+import { Region } from "../../generated/raiderioApi.js";
+import { Character, getRioCharacter } from "../../utils/rioLinkChar.js";
 
 export default {
   data: new SlashCommandBuilder()
@@ -17,31 +18,48 @@ export default {
         { name: 'eu', value: 'eu' },
         { name: 'us', value: 'us' }
       )
-      .setRequired(true)
+      .setRequired(false)
     )
     .addStringOption((option) => option.setName('realm')
       .setDescription('Name of realm')
-      .setRequired(true)
+      .setRequired(false)
     )
     .addStringOption((option) => option.setName('name')
       .setDescription('Name of character')
-      .setRequired(true)
+      .setRequired(false)
     ),
 
   async execute(interaction: ChatInputCommandInteraction) {
 
     // fetch options from interaction
-    const region = interaction.options.getString('region', true);
-    const realm = interaction.options.getString('realm', true);
-    const name = interaction.options.getString('name', true);
+    const region = interaction.options.getString('region');
+    const realm = interaction.options.getString('realm');
+    const name = interaction.options.getString('name');
+    let character: Character;
+    if (!region || !realm || !name) {
+      const link = getRioCharacter(interaction.user.id);
+      if (!link) {
+        return await interaction.reply(`No character provided.
+        Link your character to your discord user with \`/rio-link\` or provide character details`);
+      }
+      character = link;
+    } else {
+      character = {
+        region: region as Region,
+        realm: realm,
+        name: name
+      };
+    }
 
     // reply before fetching raiderIO data
-    await interaction.reply({ content: `Searching RaiderIO for \`${name}-${realm}\`...` });
+    await interaction.reply({
+      content: `Searching RaiderIO for \`${character.name}-${character.realm}\`...`
+    });
 
     const response = await raiderioService.getCharacterProfile({
-      region: region as Region,
-      realm: realm,
-      name: name,
+      region: character.region,
+      realm: character.realm,
+      name: character.name,
       fields: [
         'mythic_plus_scores_by_season:current',
         'raid_progression:current-tier',
@@ -78,9 +96,9 @@ export default {
       const raidName = Object.keys(response.data.raid_progression!)[0];
       const raidProg = Object.values(response.data.raid_progression!)[0].summary;
       const curveResponse = await raiderioService.getCharacterProfile({
-        region: region as Region,
-        realm: realm,
-        name: name,
+        region: character.region,
+        realm: character.realm,
+        name: character.name,
         fields: `raid_achievement_curve:${raidName}`
       });
 
