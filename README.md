@@ -45,7 +45,7 @@ devId=YOUR_USER_ID
 To be able to send commands to the bot, you need to register them with Discord using an API call. This is done by running the following in the root directory:
 
 ```bash
-node dist/deployCommands.js
+npm run deploy
 ```
 
 The bot is now ready to use!
