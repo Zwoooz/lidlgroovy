@@ -15,16 +15,18 @@ const commandFolders = fs.readdirSync(foldersPath);
 
 for (const folder of commandFolders) {
   const commandsPath = path.join(foldersPath, folder);
-  const commandFiles = fs.readdirSync(commandsPath).filter(
-    (file) => file.endsWith('.js') || file.endsWith('.ts')
-  );
+  const commandFiles = fs
+    .readdirSync(commandsPath)
+    .filter((file) => file.endsWith('.js') || file.endsWith('.ts'));
   for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
     const { default: command } = await import(filePath);
     if ('data' in command && 'execute' in command) {
       commands.push(command.data.toJSON());
     } else {
-      console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`); //eslint-disable-line max-len
+      console.log(
+        `[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`,
+      );
     }
   }
 }
@@ -33,13 +35,12 @@ const rest = new REST().setToken(process.env.TOKEN);
 
 try {
   console.log(`Started refreshing ${commands.length} application (/) commands.`);
-  commands.forEach(command => {
+  commands.forEach((command) => {
     console.log(chalk.green('[COMMANDS]'), 'Adding:', '/' + command.name);
   });
-  const data = await rest.put(
-    Routes.applicationCommands(process.env.clientId),
-    { body: commands },
-  ) as RESTPostAPIApplicationCommandsJSONBody[];
+  const data = (await rest.put(Routes.applicationCommands(process.env.clientId), {
+    body: commands,
+  })) as RESTPostAPIApplicationCommandsJSONBody[];
   console.log(`Successfully reloaded ${data.length} application (/) commands.`);
 } catch (error) {
   console.log(error);

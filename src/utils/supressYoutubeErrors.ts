@@ -9,11 +9,8 @@ const originalWarn = console.warn;
 
 // Checks if a log message is a YouTube extractor error that should be suppressed
 function isYouTubeExtractorError(args: unknown[]): boolean {
-  if (typeof args[0] === "string") {
-    return (
-      args[0].startsWith("[YOUTUBEJS]") ||
-      args[0].startsWith("[youtubei.js]")
-    );
+  if (typeof args[0] === 'string') {
+    return args[0].startsWith('[YOUTUBEJS]') || args[0].startsWith('[youtubei.js]');
   }
   return false;
 }

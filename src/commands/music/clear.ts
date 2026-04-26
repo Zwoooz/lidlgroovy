@@ -1,6 +1,5 @@
-import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
-import { useQueue } from "discord-player";
-
+import { ChatInputCommandInteraction, SlashCommandBuilder } from 'discord.js';
+import { useQueue } from 'discord-player';
 
 export default {
   data: new SlashCommandBuilder()
@@ -24,10 +23,10 @@ export default {
 
     queue.delete();
 
-    interaction.reply('The queue has been deleted!');
+    await interaction.reply('The queue has been deleted!');
 
     setTimeout(async () => {
       return await interaction.deleteReply().catch(console.error);
     }, 3000);
-  }
+  },
 };

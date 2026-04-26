@@ -126,8 +126,8 @@ export interface Dps1 {
  * @example "horde"
  */
 export enum Faction {
-  Horde = "horde",
-  Alliance = "alliance",
+  Horde = 'horde',
+  Alliance = 'alliance',
 }
 
 /**
@@ -135,8 +135,8 @@ export enum Faction {
  * @example "horde"
  */
 export enum Faction1 {
-  Horde = "horde",
-  Alliance = "alliance",
+  Horde = 'horde',
+  Alliance = 'alliance',
 }
 
 /**
@@ -144,8 +144,8 @@ export enum Faction1 {
  * @example "horde"
  */
 export enum Faction2 {
-  Horde = "horde",
-  Alliance = "alliance",
+  Horde = 'horde',
+  Alliance = 'alliance',
 }
 
 export interface Gear {
@@ -201,7 +201,7 @@ export interface GetApiV1CharactersProfileParams {
   /** Name of realm that character is on. This can be in slug or title format, e.g. "Altar of Storms" or "altar-of-storms" */
   realm: string;
   /** Name of region to look up character in. Can be one of: us, eu, kr, tw */
-  region: "us" | "eu" | "tw" | "kr" | "cn";
+  region: 'us' | 'eu' | 'tw' | 'kr' | 'cn';
 }
 
 export interface GetApiV1GuildsBosskillParams {
@@ -216,7 +216,7 @@ export interface GetApiV1GuildsBosskillParams {
    */
   boss: string;
   /** Raid difficulty to look up */
-  difficulty: "mythic" | "heroic" | "normal";
+  difficulty: 'mythic' | 'heroic' | 'normal';
   /**
    * Name of the guild to look up. This is not case sensitive.
    * @pattern ^[^\!\@\#\$\%\^\&\*\?\>\<\;\:]+$
@@ -224,36 +224,36 @@ export interface GetApiV1GuildsBosskillParams {
   guild: string;
   /** Raid slug to look up */
   raid:
-  | "manaforge-omega"
-  | "liberation-of-undermine"
-  | "nerubar-palace"
-  | "blackrock-depths"
-  | "awakened-amirdrassil-the-dreams-hope"
-  | "awakened-aberrus-the-shadowed-crucible"
-  | "awakened-vault-of-the-incarnates"
-  | "amirdrassil-the-dreams-hope"
-  | "aberrus-the-shadowed-crucible"
-  | "vault-of-the-incarnates"
-  | "fated-sepulcher-of-the-first-ones"
-  | "fated-sanctum-of-domination"
-  | "fated-castle-nathria"
-  | "sepulcher-of-the-first-ones"
-  | "sanctum-of-domination"
-  | "castle-nathria"
-  | "nyalotha-the-waking-city"
-  | "the-eternal-palace"
-  | "crucible-of-storms"
-  | "battle-of-dazaralor"
-  | "uldir"
-  | "antorus-the-burning-throne"
-  | "tomb-of-sargeras"
-  | "the-nighthold"
-  | "trial-of-valor"
-  | "the-emerald-nightmare";
+    | 'manaforge-omega'
+    | 'liberation-of-undermine'
+    | 'nerubar-palace'
+    | 'blackrock-depths'
+    | 'awakened-amirdrassil-the-dreams-hope'
+    | 'awakened-aberrus-the-shadowed-crucible'
+    | 'awakened-vault-of-the-incarnates'
+    | 'amirdrassil-the-dreams-hope'
+    | 'aberrus-the-shadowed-crucible'
+    | 'vault-of-the-incarnates'
+    | 'fated-sepulcher-of-the-first-ones'
+    | 'fated-sanctum-of-domination'
+    | 'fated-castle-nathria'
+    | 'sepulcher-of-the-first-ones'
+    | 'sanctum-of-domination'
+    | 'castle-nathria'
+    | 'nyalotha-the-waking-city'
+    | 'the-eternal-palace'
+    | 'crucible-of-storms'
+    | 'battle-of-dazaralor'
+    | 'uldir'
+    | 'antorus-the-burning-throne'
+    | 'tomb-of-sargeras'
+    | 'the-nighthold'
+    | 'trial-of-valor'
+    | 'the-emerald-nightmare';
   /** Name of realm that guild is on. This can be in slug or title format, e.g. "Altar of Storms" or "altar-of-storms" */
   realm: string;
   /** Name of region to look up guild in. Can be one of: us, eu, kr, tw */
-  region: "us" | "eu" | "tw" | "kr" | "cn";
+  region: 'us' | 'eu' | 'tw' | 'kr' | 'cn';
 }
 
 export interface GetApiV1GuildsProfileParams {
@@ -285,7 +285,7 @@ export interface GetApiV1GuildsProfileParams {
   /** Name of realm that guild is on. This can be in slug or title format, e.g. "Altar of Storms" or "altar-of-storms" */
   realm: string;
   /** Name of region to look up guild in. Can be one of: us, eu, kr, tw */
-  region: "us" | "eu" | "tw" | "kr" | "cn";
+  region: 'us' | 'eu' | 'tw' | 'kr' | 'cn';
 }
 
 export interface GetApiV1MythicplusAffixesParams {
@@ -298,9 +298,9 @@ export interface GetApiV1MythicplusAffixesParams {
    * Language to return name and description of affixes in. Can be one of: en, ru, ko, cn, pt, it, fr, es, de, tw
    * @default "en"
    */
-  locale?: "en" | "ru" | "ko" | "cn" | "pt" | "it" | "fr" | "es" | "de" | "tw";
+  locale?: 'en' | 'ru' | 'ko' | 'cn' | 'pt' | 'it' | 'fr' | 'es' | 'de' | 'tw';
   /** Name of region to look up affixes for. Can be one of: us, eu, kr, tw */
-  region: "us" | "eu" | "tw" | "kr" | "cn";
+  region: 'us' | 'eu' | 'tw' | 'kr' | 'cn';
 }
 
 export interface GetApiV1MythicplusLeaderboardcapacityParams {
@@ -311,12 +311,12 @@ export interface GetApiV1MythicplusLeaderboardcapacityParams {
   access_key?: string;
   realm?: string;
   /** Name of region to retrieve runs for. Can be one of: world, us, eu, kr, tw */
-  region: "us" | "eu" | "tw" | "kr" | "cn";
+  region: 'us' | 'eu' | 'tw' | 'kr' | 'cn';
   /**
    * Retrieve the capacity info for the current or previous week. Supported values: <b>current</b> and <b>previous</b>.
    * @default "current"
    */
-  scope?: "current" | "previous";
+  scope?: 'current' | 'previous';
 }
 
 export interface GetApiV1MythicplusRundetailsParams {
@@ -355,7 +355,7 @@ export interface GetApiV1MythicplusRunsParams {
    * Name of region to retrieve runs for. Can be one of: world, us, eu, kr, tw
    * @default "world"
    */
-  region?: "us" | "eu" | "tw" | "kr" | "cn" | "world";
+  region?: 'us' | 'eu' | 'tw' | 'kr' | 'cn' | 'world';
   /**
    * Name of season to request data for
    * @default "season-tww-3"
@@ -380,7 +380,7 @@ export interface GetApiV1MythicplusSeasoncutoffsParams {
    */
   access_key?: string;
   /** Region to receive cutoffs for */
-  region: "us" | "eu" | "tw" | "kr" | "cn";
+  region: 'us' | 'eu' | 'tw' | 'kr' | 'cn';
   /** Season to retrieve cutoffs for */
   season?: string;
 }
@@ -415,35 +415,35 @@ export interface GetApiV1RaidingBossrankingsParams {
    */
   boss: string;
   /** One of: mythic, heroic, normal */
-  difficulty: "mythic" | "heroic" | "normal";
+  difficulty: 'mythic' | 'heroic' | 'normal';
   /** Raid to look up. This can be the raid's full name ("Manaforge Omega") or its name in slug form: "manaforge-omega" */
   raid:
-  | "manaforge-omega"
-  | "liberation-of-undermine"
-  | "nerubar-palace"
-  | "blackrock-depths"
-  | "awakened-amirdrassil-the-dreams-hope"
-  | "awakened-aberrus-the-shadowed-crucible"
-  | "awakened-vault-of-the-incarnates"
-  | "amirdrassil-the-dreams-hope"
-  | "aberrus-the-shadowed-crucible"
-  | "vault-of-the-incarnates"
-  | "fated-sepulcher-of-the-first-ones"
-  | "fated-sanctum-of-domination"
-  | "fated-castle-nathria"
-  | "sepulcher-of-the-first-ones"
-  | "sanctum-of-domination"
-  | "castle-nathria"
-  | "nyalotha-the-waking-city"
-  | "the-eternal-palace"
-  | "crucible-of-storms"
-  | "battle-of-dazaralor"
-  | "uldir"
-  | "antorus-the-burning-throne"
-  | "tomb-of-sargeras"
-  | "the-nighthold"
-  | "trial-of-valor"
-  | "the-emerald-nightmare";
+    | 'manaforge-omega'
+    | 'liberation-of-undermine'
+    | 'nerubar-palace'
+    | 'blackrock-depths'
+    | 'awakened-amirdrassil-the-dreams-hope'
+    | 'awakened-aberrus-the-shadowed-crucible'
+    | 'awakened-vault-of-the-incarnates'
+    | 'amirdrassil-the-dreams-hope'
+    | 'aberrus-the-shadowed-crucible'
+    | 'vault-of-the-incarnates'
+    | 'fated-sepulcher-of-the-first-ones'
+    | 'fated-sanctum-of-domination'
+    | 'fated-castle-nathria'
+    | 'sepulcher-of-the-first-ones'
+    | 'sanctum-of-domination'
+    | 'castle-nathria'
+    | 'nyalotha-the-waking-city'
+    | 'the-eternal-palace'
+    | 'crucible-of-storms'
+    | 'battle-of-dazaralor'
+    | 'uldir'
+    | 'antorus-the-burning-throne'
+    | 'tomb-of-sargeras'
+    | 'the-nighthold'
+    | 'trial-of-valor'
+    | 'the-emerald-nightmare';
   /** Name of realm to restrict to. Prefix with `connected-` to retrieve rankings from the connected realm. Requires that region be a standard region: us, eu, kr, tw. */
   realm?: string;
   /** Name of region to restrict progress to. Can be a primary region: world, us, eu, kr, tw. Or a subregion: english, french, german, italian, oceanic, russian, spanish, eu-english, eu-portuguese, eu-spanish, us-english, brazil, us-spanish, us-central, us-eastern, us-mountain, us-pacific */
@@ -456,74 +456,74 @@ export interface GetApiV1RaidingHalloffameParams {
    * @default ""
    */
   access_key?: string;
-  difficulty: "mythic" | "heroic" | "normal";
+  difficulty: 'mythic' | 'heroic' | 'normal';
   /**
    * Raid to look up. This can be the raid's full name ("Manaforge Omega
    *                 ") or its name in slug form: "manaforge-omega"
    */
   raid:
-  | "manaforge-omega"
-  | "liberation-of-undermine"
-  | "nerubar-palace"
-  | "blackrock-depths"
-  | "awakened-amirdrassil-the-dreams-hope"
-  | "awakened-aberrus-the-shadowed-crucible"
-  | "awakened-vault-of-the-incarnates"
-  | "amirdrassil-the-dreams-hope"
-  | "aberrus-the-shadowed-crucible"
-  | "vault-of-the-incarnates"
-  | "fated-sepulcher-of-the-first-ones"
-  | "fated-sanctum-of-domination"
-  | "fated-castle-nathria"
-  | "sepulcher-of-the-first-ones"
-  | "sanctum-of-domination"
-  | "castle-nathria"
-  | "nyalotha-the-waking-city"
-  | "the-eternal-palace"
-  | "crucible-of-storms"
-  | "battle-of-dazaralor"
-  | "uldir"
-  | "antorus-the-burning-throne"
-  | "tomb-of-sargeras"
-  | "the-nighthold"
-  | "trial-of-valor"
-  | "the-emerald-nightmare";
+    | 'manaforge-omega'
+    | 'liberation-of-undermine'
+    | 'nerubar-palace'
+    | 'blackrock-depths'
+    | 'awakened-amirdrassil-the-dreams-hope'
+    | 'awakened-aberrus-the-shadowed-crucible'
+    | 'awakened-vault-of-the-incarnates'
+    | 'amirdrassil-the-dreams-hope'
+    | 'aberrus-the-shadowed-crucible'
+    | 'vault-of-the-incarnates'
+    | 'fated-sepulcher-of-the-first-ones'
+    | 'fated-sanctum-of-domination'
+    | 'fated-castle-nathria'
+    | 'sepulcher-of-the-first-ones'
+    | 'sanctum-of-domination'
+    | 'castle-nathria'
+    | 'nyalotha-the-waking-city'
+    | 'the-eternal-palace'
+    | 'crucible-of-storms'
+    | 'battle-of-dazaralor'
+    | 'uldir'
+    | 'antorus-the-burning-throne'
+    | 'tomb-of-sargeras'
+    | 'the-nighthold'
+    | 'trial-of-valor'
+    | 'the-emerald-nightmare';
   /** Name of region to restrict progress to. Can be one of: world, us, eu, kr, tw */
-  region: "us" | "eu" | "tw" | "kr" | "cn";
+  region: 'us' | 'eu' | 'tw' | 'kr' | 'cn';
 }
 
 export interface GetApiV1RaidingProgressionParams {
-  difficulty: "mythic" | "heroic" | "normal";
+  difficulty: 'mythic' | 'heroic' | 'normal';
   /** Raid to look up. This can be the raid's full name ("Manaforge Omega") or its name in slug form: "manaforge-omega" */
   raid:
-  | "manaforge-omega"
-  | "liberation-of-undermine"
-  | "nerubar-palace"
-  | "blackrock-depths"
-  | "awakened-amirdrassil-the-dreams-hope"
-  | "awakened-aberrus-the-shadowed-crucible"
-  | "awakened-vault-of-the-incarnates"
-  | "amirdrassil-the-dreams-hope"
-  | "aberrus-the-shadowed-crucible"
-  | "vault-of-the-incarnates"
-  | "fated-sepulcher-of-the-first-ones"
-  | "fated-sanctum-of-domination"
-  | "fated-castle-nathria"
-  | "sepulcher-of-the-first-ones"
-  | "sanctum-of-domination"
-  | "castle-nathria"
-  | "nyalotha-the-waking-city"
-  | "the-eternal-palace"
-  | "crucible-of-storms"
-  | "battle-of-dazaralor"
-  | "uldir"
-  | "antorus-the-burning-throne"
-  | "tomb-of-sargeras"
-  | "the-nighthold"
-  | "trial-of-valor"
-  | "the-emerald-nightmare";
+    | 'manaforge-omega'
+    | 'liberation-of-undermine'
+    | 'nerubar-palace'
+    | 'blackrock-depths'
+    | 'awakened-amirdrassil-the-dreams-hope'
+    | 'awakened-aberrus-the-shadowed-crucible'
+    | 'awakened-vault-of-the-incarnates'
+    | 'amirdrassil-the-dreams-hope'
+    | 'aberrus-the-shadowed-crucible'
+    | 'vault-of-the-incarnates'
+    | 'fated-sepulcher-of-the-first-ones'
+    | 'fated-sanctum-of-domination'
+    | 'fated-castle-nathria'
+    | 'sepulcher-of-the-first-ones'
+    | 'sanctum-of-domination'
+    | 'castle-nathria'
+    | 'nyalotha-the-waking-city'
+    | 'the-eternal-palace'
+    | 'crucible-of-storms'
+    | 'battle-of-dazaralor'
+    | 'uldir'
+    | 'antorus-the-burning-throne'
+    | 'tomb-of-sargeras'
+    | 'the-nighthold'
+    | 'trial-of-valor'
+    | 'the-emerald-nightmare';
   /** Name of region to restrict progress to. Can be one of: world, us, eu, kr, tw */
-  region: "us" | "eu" | "tw" | "kr" | "cn";
+  region: 'us' | 'eu' | 'tw' | 'kr' | 'cn';
 }
 
 export interface GetApiV1RaidingRaidrankingsParams {
@@ -533,7 +533,7 @@ export interface GetApiV1RaidingRaidrankingsParams {
    */
   access_key?: string;
   /** One of: mythic, heroic, normal */
-  difficulty: "mythic" | "heroic" | "normal";
+  difficulty: 'mythic' | 'heroic' | 'normal';
   /** Guild IDs of guilds to restrict the results to. Allows filtering to up to 10 different guilds. */
   guilds?: string;
   /**
@@ -549,32 +549,32 @@ export interface GetApiV1RaidingRaidrankingsParams {
   page?: number;
   /** Raid to look up. This can be the raid's full name ("Manaforge Omega") or its name in slug form: "manaforge-omega" */
   raid:
-  | "manaforge-omega"
-  | "liberation-of-undermine"
-  | "nerubar-palace"
-  | "blackrock-depths"
-  | "awakened-amirdrassil-the-dreams-hope"
-  | "awakened-aberrus-the-shadowed-crucible"
-  | "awakened-vault-of-the-incarnates"
-  | "amirdrassil-the-dreams-hope"
-  | "aberrus-the-shadowed-crucible"
-  | "vault-of-the-incarnates"
-  | "fated-sepulcher-of-the-first-ones"
-  | "fated-sanctum-of-domination"
-  | "fated-castle-nathria"
-  | "sepulcher-of-the-first-ones"
-  | "sanctum-of-domination"
-  | "castle-nathria"
-  | "nyalotha-the-waking-city"
-  | "the-eternal-palace"
-  | "crucible-of-storms"
-  | "battle-of-dazaralor"
-  | "uldir"
-  | "antorus-the-burning-throne"
-  | "tomb-of-sargeras"
-  | "the-nighthold"
-  | "trial-of-valor"
-  | "the-emerald-nightmare";
+    | 'manaforge-omega'
+    | 'liberation-of-undermine'
+    | 'nerubar-palace'
+    | 'blackrock-depths'
+    | 'awakened-amirdrassil-the-dreams-hope'
+    | 'awakened-aberrus-the-shadowed-crucible'
+    | 'awakened-vault-of-the-incarnates'
+    | 'amirdrassil-the-dreams-hope'
+    | 'aberrus-the-shadowed-crucible'
+    | 'vault-of-the-incarnates'
+    | 'fated-sepulcher-of-the-first-ones'
+    | 'fated-sanctum-of-domination'
+    | 'fated-castle-nathria'
+    | 'sepulcher-of-the-first-ones'
+    | 'sanctum-of-domination'
+    | 'castle-nathria'
+    | 'nyalotha-the-waking-city'
+    | 'the-eternal-palace'
+    | 'crucible-of-storms'
+    | 'battle-of-dazaralor'
+    | 'uldir'
+    | 'antorus-the-burning-throne'
+    | 'tomb-of-sargeras'
+    | 'the-nighthold'
+    | 'trial-of-valor'
+    | 'the-emerald-nightmare';
   /** Name of realm to restrict to. Prefix with `connected-` to retrieve rankings from the connected realm. Requires that region be a standard region: us, eu, kr, tw. */
   realm?: string;
   /** Name of region to restrict progress to. Can be a primary region: world, us, eu, kr, tw. Or a subregion: english, french, german, italian, oceanic, russian, spanish, eu-english, eu-portuguese, eu-spanish, us-english, brazil, us-spanish, us-central, us-eastern, us-mountain, us-pacific */
@@ -891,7 +891,7 @@ export interface Model4 {
    */
   use_animated_banner?: boolean;
   /** Raid curve - added manually*/
-  raid_achievement_curve: arrray
+  raid_achievement_curve: arrray;
 }
 
 export interface Model5 {
@@ -1080,60 +1080,60 @@ export interface PreviousMythicPlusRanks {
 export type Progression = Model9[];
 
 export interface RaidProgression {
-  "aberrus-the-shadowed-crucible"?: ManaforgeOmega;
-  "amirdrassil-the-dreams-hope"?: ManaforgeOmega;
-  "antorus-the-burning-throne"?: ManaforgeOmega;
-  "awakened-aberrus-the-shadowed-crucible"?: ManaforgeOmega;
-  "awakened-amirdrassil-the-dreams-hope"?: ManaforgeOmega;
-  "awakened-vault-of-the-incarnates"?: ManaforgeOmega;
-  "battle-of-dazaralor"?: ManaforgeOmega;
-  "blackrock-depths"?: ManaforgeOmega;
-  "castle-nathria"?: ManaforgeOmega;
-  "crucible-of-storms"?: ManaforgeOmega;
-  "fated-castle-nathria"?: ManaforgeOmega;
-  "fated-sanctum-of-domination"?: ManaforgeOmega;
-  "fated-sepulcher-of-the-first-ones"?: ManaforgeOmega;
-  "liberation-of-undermine"?: ManaforgeOmega;
-  "manaforge-omega"?: ManaforgeOmega;
-  "nerubar-palace"?: ManaforgeOmega;
-  "nyalotha-the-waking-city"?: ManaforgeOmega;
-  "sanctum-of-domination"?: ManaforgeOmega;
-  "sepulcher-of-the-first-ones"?: ManaforgeOmega;
-  "the-emerald-nightmare"?: ManaforgeOmega;
-  "the-eternal-palace"?: ManaforgeOmega;
-  "the-nighthold"?: ManaforgeOmega;
-  "tomb-of-sargeras"?: ManaforgeOmega;
-  "trial-of-valor"?: ManaforgeOmega;
-  "vault-of-the-incarnates"?: ManaforgeOmega;
+  'aberrus-the-shadowed-crucible'?: ManaforgeOmega;
+  'amirdrassil-the-dreams-hope'?: ManaforgeOmega;
+  'antorus-the-burning-throne'?: ManaforgeOmega;
+  'awakened-aberrus-the-shadowed-crucible'?: ManaforgeOmega;
+  'awakened-amirdrassil-the-dreams-hope'?: ManaforgeOmega;
+  'awakened-vault-of-the-incarnates'?: ManaforgeOmega;
+  'battle-of-dazaralor'?: ManaforgeOmega;
+  'blackrock-depths'?: ManaforgeOmega;
+  'castle-nathria'?: ManaforgeOmega;
+  'crucible-of-storms'?: ManaforgeOmega;
+  'fated-castle-nathria'?: ManaforgeOmega;
+  'fated-sanctum-of-domination'?: ManaforgeOmega;
+  'fated-sepulcher-of-the-first-ones'?: ManaforgeOmega;
+  'liberation-of-undermine'?: ManaforgeOmega;
+  'manaforge-omega'?: ManaforgeOmega;
+  'nerubar-palace'?: ManaforgeOmega;
+  'nyalotha-the-waking-city'?: ManaforgeOmega;
+  'sanctum-of-domination'?: ManaforgeOmega;
+  'sepulcher-of-the-first-ones'?: ManaforgeOmega;
+  'the-emerald-nightmare'?: ManaforgeOmega;
+  'the-eternal-palace'?: ManaforgeOmega;
+  'the-nighthold'?: ManaforgeOmega;
+  'tomb-of-sargeras'?: ManaforgeOmega;
+  'trial-of-valor'?: ManaforgeOmega;
+  'vault-of-the-incarnates'?: ManaforgeOmega;
   uldir?: ManaforgeOmega;
 }
 
 export interface RaidRankings {
-  "aberrus-the-shadowed-crucible"?: ManaforgeOmega1;
-  "amirdrassil-the-dreams-hope"?: ManaforgeOmega1;
-  "antorus-the-burning-throne"?: ManaforgeOmega1;
-  "awakened-aberrus-the-shadowed-crucible"?: ManaforgeOmega1;
-  "awakened-amirdrassil-the-dreams-hope"?: ManaforgeOmega1;
-  "awakened-vault-of-the-incarnates"?: ManaforgeOmega1;
-  "battle-of-dazaralor"?: ManaforgeOmega1;
-  "blackrock-depths"?: ManaforgeOmega1;
-  "castle-nathria"?: ManaforgeOmega1;
-  "crucible-of-storms"?: ManaforgeOmega1;
-  "fated-castle-nathria"?: ManaforgeOmega1;
-  "fated-sanctum-of-domination"?: ManaforgeOmega1;
-  "fated-sepulcher-of-the-first-ones"?: ManaforgeOmega1;
-  "liberation-of-undermine"?: ManaforgeOmega1;
-  "manaforge-omega"?: ManaforgeOmega1;
-  "nerubar-palace"?: ManaforgeOmega1;
-  "nyalotha-the-waking-city"?: ManaforgeOmega1;
-  "sanctum-of-domination"?: ManaforgeOmega1;
-  "sepulcher-of-the-first-ones"?: ManaforgeOmega1;
-  "the-emerald-nightmare"?: ManaforgeOmega1;
-  "the-eternal-palace"?: ManaforgeOmega1;
-  "the-nighthold"?: ManaforgeOmega1;
-  "tomb-of-sargeras"?: ManaforgeOmega1;
-  "trial-of-valor"?: ManaforgeOmega1;
-  "vault-of-the-incarnates"?: ManaforgeOmega1;
+  'aberrus-the-shadowed-crucible'?: ManaforgeOmega1;
+  'amirdrassil-the-dreams-hope'?: ManaforgeOmega1;
+  'antorus-the-burning-throne'?: ManaforgeOmega1;
+  'awakened-aberrus-the-shadowed-crucible'?: ManaforgeOmega1;
+  'awakened-amirdrassil-the-dreams-hope'?: ManaforgeOmega1;
+  'awakened-vault-of-the-incarnates'?: ManaforgeOmega1;
+  'battle-of-dazaralor'?: ManaforgeOmega1;
+  'blackrock-depths'?: ManaforgeOmega1;
+  'castle-nathria'?: ManaforgeOmega1;
+  'crucible-of-storms'?: ManaforgeOmega1;
+  'fated-castle-nathria'?: ManaforgeOmega1;
+  'fated-sanctum-of-domination'?: ManaforgeOmega1;
+  'fated-sepulcher-of-the-first-ones'?: ManaforgeOmega1;
+  'liberation-of-undermine'?: ManaforgeOmega1;
+  'manaforge-omega'?: ManaforgeOmega1;
+  'nerubar-palace'?: ManaforgeOmega1;
+  'nyalotha-the-waking-city'?: ManaforgeOmega1;
+  'sanctum-of-domination'?: ManaforgeOmega1;
+  'sepulcher-of-the-first-ones'?: ManaforgeOmega1;
+  'the-emerald-nightmare'?: ManaforgeOmega1;
+  'the-eternal-palace'?: ManaforgeOmega1;
+  'the-nighthold'?: ManaforgeOmega1;
+  'tomb-of-sargeras'?: ManaforgeOmega1;
+  'trial-of-valor'?: ManaforgeOmega1;
+  'vault-of-the-incarnates'?: ManaforgeOmega1;
   uldir?: ManaforgeOmega1;
 }
 
@@ -1160,11 +1160,11 @@ export interface Realm {
  * @example "us"
  */
 export enum Region {
-  Us = "us",
-  Eu = "eu",
-  Tw = "tw",
-  Kr = "kr",
-  Cn = "cn",
+  Us = 'us',
+  Eu = 'eu',
+  Tw = 'tw',
+  Kr = 'kr',
+  Cn = 'cn',
 }
 
 /**
@@ -1172,11 +1172,11 @@ export enum Region {
  * @example "us"
  */
 export enum Region1 {
-  Us = "us",
-  Eu = "eu",
-  Tw = "tw",
-  Kr = "kr",
-  Cn = "cn",
+  Us = 'us',
+  Eu = 'eu',
+  Tw = 'tw',
+  Kr = 'kr',
+  Cn = 'cn',
 }
 
 /**
@@ -1184,11 +1184,11 @@ export enum Region1 {
  * @example "kr"
  */
 export enum Region2 {
-  Us = "us",
-  Eu = "eu",
-  Tw = "tw",
-  Kr = "kr",
-  Cn = "cn",
+  Us = 'us',
+  Eu = 'eu',
+  Tw = 'tw',
+  Kr = 'kr',
+  Cn = 'cn',
 }
 
 export interface Region3 {
@@ -1276,9 +1276,9 @@ export interface Tank1 {
 }
 
 export type QueryParamsType = Record<string | number, any>;
-export type ResponseFormat = keyof Omit<Body, "body" | "bodyUsed">;
+export type ResponseFormat = keyof Omit<Body, 'body' | 'bodyUsed'>;
 
-export interface FullRequestParams extends Omit<RequestInit, "body"> {
+export interface FullRequestParams extends Omit<RequestInit, 'body'> {
   /** set parameter to `true` for call `securityWorker` for this request */
   secure?: boolean;
   /** request path */
@@ -1297,22 +1297,18 @@ export interface FullRequestParams extends Omit<RequestInit, "body"> {
   cancelToken?: CancelToken;
 }
 
-export type RequestParams = Omit<
-  FullRequestParams,
-  "body" | "method" | "query" | "path"
->;
+export type RequestParams = Omit<FullRequestParams, 'body' | 'method' | 'query' | 'path'>;
 
 export interface ApiConfig<SecurityDataType = unknown> {
   baseUrl?: string;
-  baseApiParams?: Omit<RequestParams, "baseUrl" | "cancelToken" | "signal">;
+  baseApiParams?: Omit<RequestParams, 'baseUrl' | 'cancelToken' | 'signal'>;
   securityWorker?: (
     securityData: SecurityDataType | null,
   ) => Promise<RequestParams | void> | RequestParams | void;
   customFetch?: typeof fetch;
 }
 
-export interface HttpResponse<D extends unknown, E extends unknown = unknown>
-  extends Response {
+export interface HttpResponse<D extends unknown, E extends unknown = unknown> extends Response {
   data: D;
   error: E;
 }
@@ -1320,26 +1316,25 @@ export interface HttpResponse<D extends unknown, E extends unknown = unknown>
 type CancelToken = Symbol | string | number;
 
 export enum ContentType {
-  Json = "application/json",
-  JsonApi = "application/vnd.api+json",
-  FormData = "multipart/form-data",
-  UrlEncoded = "application/x-www-form-urlencoded",
-  Text = "text/plain",
+  Json = 'application/json',
+  JsonApi = 'application/vnd.api+json',
+  FormData = 'multipart/form-data',
+  UrlEncoded = 'application/x-www-form-urlencoded',
+  Text = 'text/plain',
 }
 
 export class HttpClient<SecurityDataType = unknown> {
-  public baseUrl: string = "https://raider.io";
+  public baseUrl: string = 'https://raider.io';
   private securityData: SecurityDataType | null = null;
-  private securityWorker?: ApiConfig<SecurityDataType>["securityWorker"];
+  private securityWorker?: ApiConfig<SecurityDataType>['securityWorker'];
   private abortControllers = new Map<CancelToken, AbortController>();
-  private customFetch = (...fetchParams: Parameters<typeof fetch>) =>
-    fetch(...fetchParams);
+  private customFetch = (...fetchParams: Parameters<typeof fetch>) => fetch(...fetchParams);
 
   private baseApiParams: RequestParams = {
-    credentials: "same-origin",
+    credentials: 'same-origin',
     headers: {},
-    redirect: "follow",
-    referrerPolicy: "no-referrer",
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
   };
 
   constructor(apiConfig: ApiConfig<SecurityDataType> = {}) {
@@ -1352,7 +1347,7 @@ export class HttpClient<SecurityDataType = unknown> {
 
   protected encodeQueryParam(key: string, value: any) {
     const encodedKey = encodeURIComponent(key);
-    return `${encodedKey}=${encodeURIComponent(typeof value === "number" ? value : `${value}`)}`;
+    return `${encodedKey}=${encodeURIComponent(typeof value === 'number' ? value : `${value}`)}`;
   }
 
   protected addQueryParam(query: QueryParamsType, key: string) {
@@ -1361,41 +1356,37 @@ export class HttpClient<SecurityDataType = unknown> {
 
   protected addArrayQueryParam(query: QueryParamsType, key: string) {
     const value = query[key];
-    return value.map((v: any) => this.encodeQueryParam(key, v)).join("&");
+    return value.map((v: any) => this.encodeQueryParam(key, v)).join('&');
   }
 
   protected toQueryString(rawQuery?: QueryParamsType): string {
     const query = rawQuery || {};
-    const keys = Object.keys(query).filter(
-      (key) => "undefined" !== typeof query[key],
-    );
+    const keys = Object.keys(query).filter((key) => 'undefined' !== typeof query[key]);
     return keys
       .map((key) =>
         Array.isArray(query[key])
           ? this.addArrayQueryParam(query, key)
           : this.addQueryParam(query, key),
       )
-      .join("&");
+      .join('&');
   }
 
   protected addQueryParams(rawQuery?: QueryParamsType): string {
     const queryString = this.toQueryString(rawQuery);
-    return queryString ? `?${queryString}` : "";
+    return queryString ? `?${queryString}` : '';
   }
 
   private contentFormatters: Record<ContentType, (input: any) => any> = {
     [ContentType.Json]: (input: any) =>
-      input !== null && (typeof input === "object" || typeof input === "string")
+      input !== null && (typeof input === 'object' || typeof input === 'string')
         ? JSON.stringify(input)
         : input,
     [ContentType.JsonApi]: (input: any) =>
-      input !== null && (typeof input === "object" || typeof input === "string")
+      input !== null && (typeof input === 'object' || typeof input === 'string')
         ? JSON.stringify(input)
         : input,
     [ContentType.Text]: (input: any) =>
-      input !== null && typeof input !== "string"
-        ? JSON.stringify(input)
-        : input,
+      input !== null && typeof input !== 'string' ? JSON.stringify(input) : input,
     [ContentType.FormData]: (input: any) => {
       if (input instanceof FormData) {
         return input;
@@ -1407,7 +1398,7 @@ export class HttpClient<SecurityDataType = unknown> {
           key,
           property instanceof Blob
             ? property
-            : typeof property === "object" && property !== null
+            : typeof property === 'object' && property !== null
               ? JSON.stringify(property)
               : `${property}`,
         );
@@ -1417,10 +1408,7 @@ export class HttpClient<SecurityDataType = unknown> {
     [ContentType.UrlEncoded]: (input: any) => this.toQueryString(input),
   };
 
-  protected mergeRequestParams(
-    params1: RequestParams,
-    params2?: RequestParams,
-  ): RequestParams {
+  protected mergeRequestParams(params1: RequestParams, params2?: RequestParams): RequestParams {
     return {
       ...this.baseApiParams,
       ...params1,
@@ -1433,9 +1421,7 @@ export class HttpClient<SecurityDataType = unknown> {
     };
   }
 
-  protected createAbortSignal = (
-    cancelToken: CancelToken,
-  ): AbortSignal | undefined => {
+  protected createAbortSignal = (cancelToken: CancelToken): AbortSignal | undefined => {
     if (this.abortControllers.has(cancelToken)) {
       const abortController = this.abortControllers.get(cancelToken);
       if (abortController) {
@@ -1470,7 +1456,7 @@ export class HttpClient<SecurityDataType = unknown> {
     ...params
   }: FullRequestParams): Promise<HttpResponse<T, E>> => {
     const secureParams =
-      ((typeof secure === "boolean" ? secure : this.baseApiParams.secure) &&
+      ((typeof secure === 'boolean' ? secure : this.baseApiParams.secure) &&
         this.securityWorker &&
         (await this.securityWorker(this.securityData))) ||
       {};
@@ -1480,23 +1466,15 @@ export class HttpClient<SecurityDataType = unknown> {
     const responseFormat = format || requestParams.format;
 
     return this.customFetch(
-      `${baseUrl || this.baseUrl || ""}${path}${queryString ? `?${queryString}` : ""}`,
+      `${baseUrl || this.baseUrl || ''}${path}${queryString ? `?${queryString}` : ''}`,
       {
         ...requestParams,
         headers: {
           ...(requestParams.headers || {}),
-          ...(type && type !== ContentType.FormData
-            ? { "Content-Type": type }
-            : {}),
+          ...(type && type !== ContentType.FormData ? { 'Content-Type': type } : {}),
         },
-        signal:
-          (cancelToken
-            ? this.createAbortSignal(cancelToken)
-            : requestParams.signal) || null,
-        body:
-          typeof body === "undefined" || body === null
-            ? null
-            : payloadFormatter(body),
+        signal: (cancelToken ? this.createAbortSignal(cancelToken) : requestParams.signal) || null,
+        body: typeof body === 'undefined' || body === null ? null : payloadFormatter(body),
       },
     ).then(async (response) => {
       const r = response as HttpResponse<T, E>;
@@ -1507,18 +1485,18 @@ export class HttpClient<SecurityDataType = unknown> {
       const data = !responseFormat
         ? r
         : await responseToParse[responseFormat]()
-          .then((data) => {
-            if (r.ok) {
-              r.data = data;
-            } else {
-              r.error = data;
-            }
-            return r;
-          })
-          .catch((e) => {
-            r.error = e;
-            return r;
-          });
+            .then((data) => {
+              if (r.ok) {
+                r.data = data;
+              } else {
+                r.error = data;
+              }
+              return r;
+            })
+            .catch((e) => {
+              r.error = e;
+              return r;
+            });
 
       if (cancelToken) {
         this.abortControllers.delete(cancelToken);
@@ -1544,9 +1522,7 @@ export class HttpClient<SecurityDataType = unknown> {
  *
  * For commercial use, please contact us below:
  */
-export class Api<
-  SecurityDataType extends unknown,
-> extends HttpClient<SecurityDataType> {
+export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
   v1 = {
     /**
      * No description
@@ -1556,13 +1532,10 @@ export class Api<
      * @summary Retrieve the current, previous, and next period ids and date ranges
      * @request GET:/api/v1/periods
      */
-    getApiV1Periods: (
-      query: GetApiV1PeriodsParams,
-      params: RequestParams = {},
-    ) =>
+    getApiV1Periods: (query: GetApiV1PeriodsParams, params: RequestParams = {}) =>
       this.request<any, string>({
         path: `/api/v1/periods`,
-        method: "GET",
+        method: 'GET',
         query: query,
         ...params,
       }),
@@ -1581,7 +1554,7 @@ export class Api<
     ) =>
       this.request<Model4, any>({
         path: `/api/v1/characters/profile`,
-        method: "GET",
+        method: 'GET',
         query: query,
         ...params,
       }),
@@ -1594,13 +1567,10 @@ export class Api<
      * @summary Retrieve information about a guild boss kill.
      * @request GET:/api/v1/guilds/boss-kill
      */
-    getApiV1GuildsBosskill: (
-      query: GetApiV1GuildsBosskillParams,
-      params: RequestParams = {},
-    ) =>
+    getApiV1GuildsBosskill: (query: GetApiV1GuildsBosskillParams, params: RequestParams = {}) =>
       this.request<any, string>({
         path: `/api/v1/guilds/boss-kill`,
-        method: "GET",
+        method: 'GET',
         query: query,
         ...params,
       }),
@@ -1613,13 +1583,10 @@ export class Api<
      * @summary Retrieve information about a guild.
      * @request GET:/api/v1/guilds/profile
      */
-    getApiV1GuildsProfile: (
-      query: GetApiV1GuildsProfileParams,
-      params: RequestParams = {},
-    ) =>
+    getApiV1GuildsProfile: (query: GetApiV1GuildsProfileParams, params: RequestParams = {}) =>
       this.request<Model5, any>({
         path: `/api/v1/guilds/profile`,
-        method: "GET",
+        method: 'GET',
         query: query,
         ...params,
       }),
@@ -1638,7 +1605,7 @@ export class Api<
     ) =>
       this.request<Model7, any>({
         path: `/api/v1/mythic-plus/affixes`,
-        method: "GET",
+        method: 'GET',
         query: query,
         ...params,
       }),
@@ -1657,7 +1624,7 @@ export class Api<
     ) =>
       this.request<any, string>({
         path: `/api/v1/mythic-plus/leaderboard-capacity`,
-        method: "GET",
+        method: 'GET',
         query: query,
         ...params,
       }),
@@ -1676,7 +1643,7 @@ export class Api<
     ) =>
       this.request<any, string>({
         path: `/api/v1/mythic-plus/run-details`,
-        method: "GET",
+        method: 'GET',
         query: query,
         ...params,
       }),
@@ -1689,13 +1656,10 @@ export class Api<
      * @summary Retrieve information about the top runs that match the given criteria
      * @request GET:/api/v1/mythic-plus/runs
      */
-    getApiV1MythicplusRuns: (
-      query: GetApiV1MythicplusRunsParams,
-      params: RequestParams = {},
-    ) =>
+    getApiV1MythicplusRuns: (query: GetApiV1MythicplusRunsParams, params: RequestParams = {}) =>
       this.request<any, string>({
         path: `/api/v1/mythic-plus/runs`,
-        method: "GET",
+        method: 'GET',
         query: query,
         ...params,
       }),
@@ -1714,7 +1678,7 @@ export class Api<
     ) =>
       this.request<any, string>({
         path: `/api/v1/mythic-plus/score-tiers`,
-        method: "GET",
+        method: 'GET',
         query: query,
         ...params,
       }),
@@ -1733,7 +1697,7 @@ export class Api<
     ) =>
       this.request<any, string>({
         path: `/api/v1/mythic-plus/season-cutoffs`,
-        method: "GET",
+        method: 'GET',
         query: query,
         ...params,
       }),
@@ -1752,7 +1716,7 @@ export class Api<
     ) =>
       this.request<any, string>({
         path: `/api/v1/mythic-plus/static-data`,
-        method: "GET",
+        method: 'GET',
         query: query,
         ...params,
       }),
@@ -1771,7 +1735,7 @@ export class Api<
     ) =>
       this.request<any, string>({
         path: `/api/v1/raiding/boss-rankings`,
-        method: "GET",
+        method: 'GET',
         query: query,
         ...params,
       }),
@@ -1790,7 +1754,7 @@ export class Api<
     ) =>
       this.request<any, string>({
         path: `/api/v1/raiding/hall-of-fame`,
-        method: "GET",
+        method: 'GET',
         query: query,
         ...params,
       }),
@@ -1809,7 +1773,7 @@ export class Api<
     ) =>
       this.request<Model10, any>({
         path: `/api/v1/raiding/progression`,
-        method: "GET",
+        method: 'GET',
         query: query,
         ...params,
       }),
@@ -1828,7 +1792,7 @@ export class Api<
     ) =>
       this.request<any, string>({
         path: `/api/v1/raiding/raid-rankings`,
-        method: "GET",
+        method: 'GET',
         query: query,
         ...params,
       }),
@@ -1847,7 +1811,7 @@ export class Api<
     ) =>
       this.request<any, string>({
         path: `/api/v1/raiding/static-data`,
-        method: "GET",
+        method: 'GET',
         query: query,
         ...params,
       }),

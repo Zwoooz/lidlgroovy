@@ -7,16 +7,20 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = {
+  [_ in K]?: never;
+};
+export type Incremental<T> =
+  | T
+  | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string; output: string; }
-  String: { input: string; output: string; }
-  Boolean: { input: boolean; output: boolean; }
-  Int: { input: number; output: number; }
-  Float: { input: number; output: number; }
-  JSON: { input: any; output: any; }
+  ID: { input: string; output: string };
+  String: { input: string; output: string };
+  Boolean: { input: boolean; output: boolean };
+  Int: { input: number; output: number };
+  Float: { input: number; output: number };
+  JSON: { input: any; output: any };
 };
 
 export type ArchonViewModels = {
@@ -67,11 +71,9 @@ export type ArchonViewModels = {
   userFromDesktopClientToken?: Maybe<Scalars['JSON']['output']>;
 };
 
-
 export type ArchonViewModelsAbilityArgs = {
   id?: InputMaybe<Scalars['Int']['input']>;
 };
-
 
 export type ArchonViewModelsArticleArgs = {
   articleCategorySlug?: InputMaybe<Scalars['String']['input']>;
@@ -79,22 +81,18 @@ export type ArchonViewModelsArticleArgs = {
   siteName?: InputMaybe<Scalars['String']['input']>;
 };
 
-
 export type ArchonViewModelsArticleCategoryArgs = {
   articleCategorySlug?: InputMaybe<Scalars['String']['input']>;
 };
-
 
 export type ArchonViewModelsArticleSlugsArgs = {
   articleCategorySlug?: InputMaybe<Scalars['String']['input']>;
   siteName?: InputMaybe<Scalars['String']['input']>;
 };
 
-
 export type ArchonViewModelsBuildsClassesAndSpecsPageArgs = {
   gameSlug?: InputMaybe<Scalars['String']['input']>;
 };
-
 
 export type ArchonViewModelsBuildsSpecPageArgs = {
   affixesSlug?: InputMaybe<Scalars['String']['input']>;
@@ -107,7 +105,6 @@ export type ArchonViewModelsBuildsSpecPageArgs = {
   zoneTypeSlug?: InputMaybe<Scalars['String']['input']>;
 };
 
-
 export type ArchonViewModelsBuildsZonePageArgs = {
   affixesSlug?: InputMaybe<Scalars['String']['input']>;
   difficultySlug?: InputMaybe<Scalars['String']['input']>;
@@ -117,12 +114,10 @@ export type ArchonViewModelsBuildsZonePageArgs = {
   zoneTypeSlug?: InputMaybe<Scalars['String']['input']>;
 };
 
-
 export type ArchonViewModelsCharacterCustomizationOptionsArgs = {
   characterSlug: Scalars['String']['input'];
   userId?: InputMaybe<Scalars['Int']['input']>;
 };
-
 
 export type ArchonViewModelsCharacterEncounterRankingsArgs = {
   aggregateEncounterId: Scalars['String']['input'];
@@ -140,13 +135,11 @@ export type ArchonViewModelsCharacterEncounterRankingsArgs = {
   userId?: InputMaybe<Scalars['Int']['input']>;
 };
 
-
 export type ArchonViewModelsCharacterIndexPageArgs = {
   gameSlug: Scalars['String']['input'];
   searchTerm?: InputMaybe<Scalars['String']['input']>;
   userId?: InputMaybe<Scalars['Int']['input']>;
 };
-
 
 export type ArchonViewModelsCharacterPageArgs = {
   byBracketSlug?: InputMaybe<Scalars['String']['input']>;
@@ -163,7 +156,6 @@ export type ArchonViewModelsCharacterPageArgs = {
   specSlug?: InputMaybe<Scalars['String']['input']>;
   userId?: InputMaybe<Scalars['Int']['input']>;
 };
-
 
 export type ArchonViewModelsCharacterPageContentArgs = {
   byBracketSlug?: InputMaybe<Scalars['String']['input']>;
@@ -182,11 +174,9 @@ export type ArchonViewModelsCharacterPageContentArgs = {
   userId?: InputMaybe<Scalars['Int']['input']>;
 };
 
-
 export type ArchonViewModelsCmsNavigationArgs = {
   currentSlug?: InputMaybe<Scalars['String']['input']>;
 };
-
 
 export type ArchonViewModelsFightPageArgs = {
   categorySlug: Scalars['String']['input'];
@@ -201,7 +191,6 @@ export type ArchonViewModelsFightPageArgs = {
   throughputSlug?: InputMaybe<Scalars['String']['input']>;
   userId?: InputMaybe<Scalars['Int']['input']>;
 };
-
 
 export type ArchonViewModelsFightPageContentArgs = {
   categorySlug: Scalars['String']['input'];
@@ -218,17 +207,14 @@ export type ArchonViewModelsFightPageContentArgs = {
   userId?: InputMaybe<Scalars['Int']['input']>;
 };
 
-
 export type ArchonViewModelsGameArgs = {
   buildsZoneTypeSlug?: InputMaybe<Scalars['String']['input']>;
 };
-
 
 export type ArchonViewModelsHeaderArgs = {
   gameSlug?: InputMaybe<Scalars['String']['input']>;
   locale?: InputMaybe<Scalars['String']['input']>;
 };
-
 
 export type ArchonViewModelsPageOfArticlePreviewsArgs = {
   articleCategorySlug?: InputMaybe<Scalars['String']['input']>;
@@ -236,23 +222,19 @@ export type ArchonViewModelsPageOfArticlePreviewsArgs = {
   siteName?: InputMaybe<Scalars['String']['input']>;
 };
 
-
 export type ArchonViewModelsReportPageArgs = {
   gameSlug: Scalars['String']['input'];
   reportSlug: Scalars['String']['input'];
   userId?: InputMaybe<Scalars['Int']['input']>;
 };
 
-
 export type ArchonViewModelsSnippetsArgs = {
   snippetSlugs?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
-
 export type ArchonViewModelsTranslationsArgs = {
   keys?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
-
 
 export type ArchonViewModelsUserFromDesktopClientTokenArgs = {
   desktopClientToken: Scalars['String']['input'];
@@ -306,7 +288,6 @@ export type Character = {
   zoneRankings?: Maybe<Scalars['JSON']['output']>;
 };
 
-
 /** A player character. Characters can earn individual rankings and appear in reports. */
 export type CharacterEncounterRankingsArgs = {
   byBracket?: InputMaybe<Scalars['Boolean']['input']>;
@@ -326,20 +307,17 @@ export type CharacterEncounterRankingsArgs = {
   timeframe?: InputMaybe<RankingTimeframeType>;
 };
 
-
 /** A player character. Characters can earn individual rankings and appear in reports. */
 export type CharacterGameDataArgs = {
   forceUpdate?: InputMaybe<Scalars['Boolean']['input']>;
   specID?: InputMaybe<Scalars['Int']['input']>;
 };
 
-
 /** A player character. Characters can earn individual rankings and appear in reports. */
 export type CharacterRecentReportsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
 };
-
 
 /** A player character. Characters can earn individual rankings and appear in reports. */
 export type CharacterZoneRankingsArgs = {
@@ -366,7 +344,6 @@ export type CharacterData = {
   characters?: Maybe<CharacterPagination>;
 };
 
-
 /** The CharacterData object enables the retrieval of single characters or filtered collections of characters. */
 export type CharacterDataCharacterArgs = {
   id?: InputMaybe<Scalars['Int']['input']>;
@@ -374,7 +351,6 @@ export type CharacterDataCharacterArgs = {
   serverRegion?: InputMaybe<Scalars['String']['input']>;
   serverSlug?: InputMaybe<Scalars['String']['input']>;
 };
-
 
 /** The CharacterData object enables the retrieval of single characters or filtered collections of characters. */
 export type CharacterDataCharactersArgs = {
@@ -450,7 +426,7 @@ export enum CharacterPageRankingMetricType {
   /** Healing done per second to tanks. */
   Tankhps = 'tankhps',
   /** Weighted damage per second. Unique to WoW currently. Used to remove pad damage and reward damage done to high priority targets. */
-  Wdps = 'wdps'
+  Wdps = 'wdps',
 }
 
 export type CharacterPagination = {
@@ -536,7 +512,7 @@ export enum CharacterRankingMetricType {
   /** Healing done per second to tanks. */
   Tankhps = 'tankhps',
   /** Weighted damage per second. Unique to WoW currently. Used to remove pad damage and reward damage done to high priority targets. */
-  Wdps = 'wdps'
+  Wdps = 'wdps',
 }
 
 /** A single difficulty for a given raid zone. Difficulties have an integer value representing the actual difficulty, a localized name that describes the difficulty level, and a list of valid sizes for the difficulty level. */
@@ -567,7 +543,6 @@ export type Encounter = {
   zone: Zone;
 };
 
-
 /** A single encounter for the game. */
 export type EncounterCharacterRankingsArgs = {
   bracket?: InputMaybe<Scalars['Int']['input']>;
@@ -589,7 +564,6 @@ export type EncounterCharacterRankingsArgs = {
   soulbindID?: InputMaybe<Scalars['Int']['input']>;
   specName?: InputMaybe<Scalars['String']['input']>;
 };
-
 
 /** A single encounter for the game. */
 export type EncounterFightRankingsArgs = {
@@ -645,7 +619,7 @@ export enum EventDataType {
   /** Summons */
   Summons = 'Summons',
   /** Threat. */
-  Threat = 'Threat'
+  Threat = 'Threat',
 }
 
 /** A single expansion for the game. */
@@ -666,7 +640,7 @@ export enum ExternalBuffRankFilter {
   /** Only include ranks that DO NOT CONTAIN external buffs. */
   Exclude = 'Exclude',
   /** Only include ranks that DO CONTAIN external buffs. */
-  Require = 'Require'
+  Require = 'Require',
 }
 
 /** All the possible metrics. */
@@ -682,7 +656,7 @@ export enum FightRankingMetricType {
   /** For Mythic+ dungeons in WoW, represents the team's score. Used for ESO trials and dungeons also. */
   Score = 'score',
   /** Speed metric, based off the duration of the fight. */
-  Speed = 'speed'
+  Speed = 'speed',
 }
 
 /** A single ability for the game. */
@@ -818,25 +792,21 @@ export type GameData = {
   zones?: Maybe<GameZonePagination>;
 };
 
-
 /** The game object contains collections of data such as NPCs, classes, abilities, items, maps, etc. Game data only changes when major game patches are released, so you should cache results for as long as possible and only update when new content is released for the game. */
 export type GameDataAbilitiesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
 };
 
-
 /** The game object contains collections of data such as NPCs, classes, abilities, items, maps, etc. Game data only changes when major game patches are released, so you should cache results for as long as possible and only update when new content is released for the game. */
 export type GameDataAbilityArgs = {
   id?: InputMaybe<Scalars['Int']['input']>;
 };
 
-
 /** The game object contains collections of data such as NPCs, classes, abilities, items, maps, etc. Game data only changes when major game patches are released, so you should cache results for as long as possible and only update when new content is released for the game. */
 export type GameDataAchievementArgs = {
   id?: InputMaybe<Scalars['Int']['input']>;
 };
-
 
 /** The game object contains collections of data such as NPCs, classes, abilities, items, maps, etc. Game data only changes when major game patches are released, so you should cache results for as long as possible and only update when new content is released for the game. */
 export type GameDataAchievementsArgs = {
@@ -844,12 +814,10 @@ export type GameDataAchievementsArgs = {
   page?: InputMaybe<Scalars['Int']['input']>;
 };
 
-
 /** The game object contains collections of data such as NPCs, classes, abilities, items, maps, etc. Game data only changes when major game patches are released, so you should cache results for as long as possible and only update when new content is released for the game. */
 export type GameDataAffixArgs = {
   id?: InputMaybe<Scalars['Int']['input']>;
 };
-
 
 /** The game object contains collections of data such as NPCs, classes, abilities, items, maps, etc. Game data only changes when major game patches are released, so you should cache results for as long as possible and only update when new content is released for the game. */
 export type GameDataClassArgs = {
@@ -858,19 +826,16 @@ export type GameDataClassArgs = {
   zone_id?: InputMaybe<Scalars['Int']['input']>;
 };
 
-
 /** The game object contains collections of data such as NPCs, classes, abilities, items, maps, etc. Game data only changes when major game patches are released, so you should cache results for as long as possible and only update when new content is released for the game. */
 export type GameDataClassesArgs = {
   faction_id?: InputMaybe<Scalars['Int']['input']>;
   zone_id?: InputMaybe<Scalars['Int']['input']>;
 };
 
-
 /** The game object contains collections of data such as NPCs, classes, abilities, items, maps, etc. Game data only changes when major game patches are released, so you should cache results for as long as possible and only update when new content is released for the game. */
 export type GameDataEnchantArgs = {
   id?: InputMaybe<Scalars['Int']['input']>;
 };
-
 
 /** The game object contains collections of data such as NPCs, classes, abilities, items, maps, etc. Game data only changes when major game patches are released, so you should cache results for as long as possible and only update when new content is released for the game. */
 export type GameDataEnchantsArgs = {
@@ -878,18 +843,15 @@ export type GameDataEnchantsArgs = {
   page?: InputMaybe<Scalars['Int']['input']>;
 };
 
-
 /** The game object contains collections of data such as NPCs, classes, abilities, items, maps, etc. Game data only changes when major game patches are released, so you should cache results for as long as possible and only update when new content is released for the game. */
 export type GameDataItemArgs = {
   id?: InputMaybe<Scalars['Int']['input']>;
 };
 
-
 /** The game object contains collections of data such as NPCs, classes, abilities, items, maps, etc. Game data only changes when major game patches are released, so you should cache results for as long as possible and only update when new content is released for the game. */
 export type GameDataItem_SetArgs = {
   id?: InputMaybe<Scalars['Int']['input']>;
 };
-
 
 /** The game object contains collections of data such as NPCs, classes, abilities, items, maps, etc. Game data only changes when major game patches are released, so you should cache results for as long as possible and only update when new content is released for the game. */
 export type GameDataItem_SetsArgs = {
@@ -897,19 +859,16 @@ export type GameDataItem_SetsArgs = {
   page?: InputMaybe<Scalars['Int']['input']>;
 };
 
-
 /** The game object contains collections of data such as NPCs, classes, abilities, items, maps, etc. Game data only changes when major game patches are released, so you should cache results for as long as possible and only update when new content is released for the game. */
 export type GameDataItemsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
 };
 
-
 /** The game object contains collections of data such as NPCs, classes, abilities, items, maps, etc. Game data only changes when major game patches are released, so you should cache results for as long as possible and only update when new content is released for the game. */
 export type GameDataMapArgs = {
   id?: InputMaybe<Scalars['Int']['input']>;
 };
-
 
 /** The game object contains collections of data such as NPCs, classes, abilities, items, maps, etc. Game data only changes when major game patches are released, so you should cache results for as long as possible and only update when new content is released for the game. */
 export type GameDataMapsArgs = {
@@ -917,12 +876,10 @@ export type GameDataMapsArgs = {
   page?: InputMaybe<Scalars['Int']['input']>;
 };
 
-
 /** The game object contains collections of data such as NPCs, classes, abilities, items, maps, etc. Game data only changes when major game patches are released, so you should cache results for as long as possible and only update when new content is released for the game. */
 export type GameDataNpcArgs = {
   id?: InputMaybe<Scalars['Int']['input']>;
 };
-
 
 /** The game object contains collections of data such as NPCs, classes, abilities, items, maps, etc. Game data only changes when major game patches are released, so you should cache results for as long as possible and only update when new content is released for the game. */
 export type GameDataNpcsArgs = {
@@ -930,12 +887,10 @@ export type GameDataNpcsArgs = {
   page?: InputMaybe<Scalars['Int']['input']>;
 };
 
-
 /** The game object contains collections of data such as NPCs, classes, abilities, items, maps, etc. Game data only changes when major game patches are released, so you should cache results for as long as possible and only update when new content is released for the game. */
 export type GameDataZoneArgs = {
   id?: InputMaybe<Scalars['Int']['input']>;
 };
-
 
 /** The game object contains collections of data such as NPCs, classes, abilities, items, maps, etc. Game data only changes when major game patches are released, so you should cache results for as long as possible and only update when new content is released for the game. */
 export type GameDataZonesArgs = {
@@ -1170,7 +1125,7 @@ export enum GraphDataType {
   /** Survivability (death info across multiple pulls). */
   Survivability = 'Survivability',
   /** Threat. */
-  Threat = 'Threat'
+  Threat = 'Threat',
 }
 
 /** A single guild. Guilds earn their own rankings and contain characters. They may correspond to a guild in-game or be a custom guild created just to hold reports and rankings. */
@@ -1207,7 +1162,6 @@ export type Guild = {
   zoneRanking: GuildZoneRankings;
 };
 
-
 /** A single guild. Guilds earn their own rankings and contain characters. They may correspond to a guild in-game or be a custom guild created just to hold reports and rankings. */
 export type GuildAttendanceArgs = {
   guildTagID?: InputMaybe<Scalars['Int']['input']>;
@@ -1216,13 +1170,11 @@ export type GuildAttendanceArgs = {
   zoneID?: InputMaybe<Scalars['Int']['input']>;
 };
 
-
 /** A single guild. Guilds earn their own rankings and contain characters. They may correspond to a guild in-game or be a custom guild created just to hold reports and rankings. */
 export type GuildMembersArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
 };
-
 
 /** A single guild. Guilds earn their own rankings and contain characters. They may correspond to a guild in-game or be a custom guild created just to hold reports and rankings. */
 export type GuildZoneRankingArgs = {
@@ -1271,7 +1223,6 @@ export type GuildData = {
   guilds?: Maybe<GuildPagination>;
 };
 
-
 /** The GuildData object enables the retrieval of single guilds or filtered collections of guilds. */
 export type GuildDataGuildArgs = {
   id?: InputMaybe<Scalars['Int']['input']>;
@@ -1279,7 +1230,6 @@ export type GuildDataGuildArgs = {
   serverRegion?: InputMaybe<Scalars['String']['input']>;
   serverSlug?: InputMaybe<Scalars['String']['input']>;
 };
-
 
 /** The GuildData object enables the retrieval of single guilds or filtered collections of guilds. */
 export type GuildDataGuildsArgs = {
@@ -1318,7 +1268,7 @@ export enum GuildRank {
   /** The user is not a member of this guild or team. */
   NonMember = 'NonMember',
   Officer = 'Officer',
-  Recruit = 'Recruit'
+  Recruit = 'Recruit',
 }
 
 /** The tag for a specific guild. Tags can be used to categorize reports within a guild. In the site UI, they are referred to as report tags. */
@@ -1343,19 +1293,16 @@ export type GuildZoneRankings = {
   speed?: Maybe<WorldRegionServerRankPositions>;
 };
 
-
 /** A guild's rankings within a zone. */
 export type GuildZoneRankingsCompleteRaidSpeedArgs = {
   difficulty?: InputMaybe<Scalars['Int']['input']>;
   size?: InputMaybe<Scalars['Int']['input']>;
 };
 
-
 /** A guild's rankings within a zone. */
 export type GuildZoneRankingsProgressArgs = {
   size?: InputMaybe<Scalars['Int']['input']>;
 };
-
 
 /** A guild's rankings within a zone. */
 export type GuildZoneRankingsSpeedArgs = {
@@ -1380,7 +1327,7 @@ export enum HardModeLevelRankFilter {
   /** Hard mode level 4. */
   Level4 = 'Level4',
   /** The normal (non-hard) mode level. Convenience alias for hard mode level 0. */
-  NormalMode = 'NormalMode'
+  NormalMode = 'NormalMode',
 }
 
 /** Whether or not to fetch information for friendlies or enemies. */
@@ -1388,7 +1335,7 @@ export enum HostilityType {
   /** Fetch information for enemies. */
   Enemies = 'Enemies',
   /** Fetch information for friendlies. */
-  Friendlies = 'Friendlies'
+  Friendlies = 'Friendlies',
 }
 
 /** A filter for kills vs wipes and encounters vs trash. */
@@ -1402,7 +1349,7 @@ export enum KillType {
   /** Only include trash. */
   Trash = 'Trash',
   /** Only include encounters that end in a wipe. */
-  Wipes = 'Wipes'
+  Wipes = 'Wipes',
 }
 
 /** Source of the rank. Most ranks only support log ranks, but some games (ESO) and content types (Retail WoW M+) support leaderboard ranks with no backing log. */
@@ -1410,7 +1357,7 @@ export enum LeaderboardRank {
   /** All ranks are included. */
   Any = 'Any',
   /** Only include ranks with a backing log. */
-  LogsOnly = 'LogsOnly'
+  LogsOnly = 'LogsOnly',
 }
 
 /** A single partition for a given raid zone. Partitions have an integer value representing the actual partition and a localized name that describes what the partition represents. Partitions contain their own rankings, statistics and all stars. */
@@ -1465,7 +1412,6 @@ export type ProgressRaceData = {
   progressRace?: Maybe<Scalars['JSON']['output']>;
 };
 
-
 /** A way to obtain data for the top guilds involved in an ongoing world first or realm first progress race. */
 export type ProgressRaceDataDetailedCompositionArgs = {
   competitionID?: InputMaybe<Scalars['Int']['input']>;
@@ -1477,7 +1423,6 @@ export type ProgressRaceDataDetailedCompositionArgs = {
   serverSlug?: InputMaybe<Scalars['String']['input']>;
   size?: InputMaybe<Scalars['Int']['input']>;
 };
-
 
 /** A way to obtain data for the top guilds involved in an ongoing world first or realm first progress race. */
 export type ProgressRaceDataProgressRaceArgs = {
@@ -1529,7 +1474,7 @@ export enum RankingCompareType {
   /** Compare against all parses in a two week window. */
   Parses = 'Parses',
   /** Compare against rankings. */
-  Rankings = 'Rankings'
+  Rankings = 'Rankings',
 }
 
 /** Whether or not rankings are today or historical. */
@@ -1537,7 +1482,7 @@ export enum RankingTimeframeType {
   /** Compare against historical rankings. */
   Historical = 'Historical',
   /** Compare against today's rankings. */
-  Today = 'Today'
+  Today = 'Today',
 }
 
 /** A way to obtain your current rate limit usage. */
@@ -1567,7 +1512,6 @@ export type Region = {
   /** The subregions found within this region. */
   subregions?: Maybe<Array<Maybe<Subregion>>>;
 };
-
 
 /** A single region for the game. */
 export type RegionServersArgs = {
@@ -1626,7 +1570,6 @@ export type Report = {
   zone?: Maybe<Zone>;
 };
 
-
 /** A single report uploaded by a player to a guild or personal logs. */
 export type ReportEventsArgs = {
   abilityID?: InputMaybe<Scalars['Float']['input']>;
@@ -1659,7 +1602,6 @@ export type ReportEventsArgs = {
   wipeCutoff?: InputMaybe<Scalars['Int']['input']>;
 };
 
-
 /** A single report uploaded by a player to a guild or personal logs. */
 export type ReportFightsArgs = {
   difficulty?: InputMaybe<Scalars['Int']['input']>;
@@ -1668,7 +1610,6 @@ export type ReportFightsArgs = {
   killType?: InputMaybe<KillType>;
   translate?: InputMaybe<Scalars['Boolean']['input']>;
 };
-
 
 /** A single report uploaded by a player to a guild or personal logs. */
 export type ReportGraphArgs = {
@@ -1699,12 +1640,10 @@ export type ReportGraphArgs = {
   wipeCutoff?: InputMaybe<Scalars['Int']['input']>;
 };
 
-
 /** A single report uploaded by a player to a guild or personal logs. */
 export type ReportMasterDataArgs = {
   translate?: InputMaybe<Scalars['Boolean']['input']>;
 };
-
 
 /** A single report uploaded by a player to a guild or personal logs. */
 export type ReportPlayerDetailsArgs = {
@@ -1718,7 +1657,6 @@ export type ReportPlayerDetailsArgs = {
   translate?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-
 /** A single report uploaded by a player to a guild or personal logs. */
 export type ReportRankingsArgs = {
   compare?: InputMaybe<RankingCompareType>;
@@ -1728,7 +1666,6 @@ export type ReportRankingsArgs = {
   playerMetric?: InputMaybe<ReportRankingMetricType>;
   timeframe?: InputMaybe<RankingTimeframeType>;
 };
-
 
 /** A single report uploaded by a player to a guild or personal logs. */
 export type ReportTableArgs = {
@@ -1818,7 +1755,6 @@ export type ReportComponent = {
   name: Scalars['String']['output'];
 };
 
-
 export type ReportComponentEvaluateArgs = {
   debug?: InputMaybe<Scalars['Boolean']['input']>;
   filter?: InputMaybe<ReportComponentFilter>;
@@ -1835,14 +1771,12 @@ export type ReportComponentData = {
   list: Array<ReportComponent>;
 };
 
-
 export type ReportComponentDataEvaluateScriptArgs = {
   contents: Scalars['String']['input'];
   debug?: InputMaybe<Scalars['Boolean']['input']>;
   filter?: InputMaybe<ReportComponentFilter>;
   reportCode: Scalars['String']['input'];
 };
-
 
 export type ReportComponentDataGetArgs = {
   key: Scalars['String']['input'];
@@ -1885,23 +1819,19 @@ export type ReportComponentMutation = {
   updateContents?: Maybe<Scalars['Boolean']['output']>;
 };
 
-
 export type ReportComponentMutationCreateArgs = {
   contents?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
 };
 
-
 export type ReportComponentMutationDeleteArgs = {
   key: Scalars['String']['input'];
 };
-
 
 export type ReportComponentMutationSetDeletionProtectedArgs = {
   key: Scalars['String']['input'];
   protected?: InputMaybe<Scalars['Boolean']['input']>;
 };
-
 
 export type ReportComponentMutationUpdateContentsArgs = {
   contents: Scalars['String']['input'];
@@ -1935,13 +1865,11 @@ export type ReportData = {
   reports?: Maybe<ReportPagination>;
 };
 
-
 /** The ReportData object enables the retrieval of single reports or filtered collections of reports. */
 export type ReportDataReportArgs = {
   allowUnlisted?: InputMaybe<Scalars['Boolean']['input']>;
   code?: InputMaybe<Scalars['String']['input']>;
 };
-
 
 /** The ReportData object enables the retrieval of single reports or filtered collections of reports. */
 export type ReportDataReportsArgs = {
@@ -2097,7 +2025,6 @@ export type ReportFight = {
   wipeCalledTime?: Maybe<Scalars['Float']['output']>;
 };
 
-
 /** The ReportFight represents a single fight that occurs in the report. */
 export type ReportFightTalentImportCodeArgs = {
   actorID: Scalars['Int']['input'];
@@ -2152,7 +2079,6 @@ export type ReportMasterData = {
   /** The version of the client parser that was used to parse and upload this log file. */
   logVersion: Scalars['Int']['output'];
 };
-
 
 /** The ReporMastertData object contains information about the log version of a report, as well as the actors and abilities used in the report. */
 export type ReportMasterDataActorsArgs = {
@@ -2211,7 +2137,7 @@ export enum ReportRankingMetricType {
   /** Healing done per second to tanks. */
   Tankhps = 'tankhps',
   /** Weighted damage per second. Unique to WoW currently. Used to remove pad damage and reward damage done to high priority targets. */
-  Wdps = 'wdps'
+  Wdps = 'wdps',
 }
 
 /** Used to specify a tank, healer or DPS role. */
@@ -2223,7 +2149,7 @@ export enum RoleType {
   /** Fetch the healer role only. */
   Healer = 'Healer',
   /** Fetch the tanking role only. */
-  Tank = 'Tank'
+  Tank = 'Tank',
 }
 
 /** A single server. Servers correspond to actual game servers that characters and guilds reside on. */
@@ -2253,13 +2179,11 @@ export type Server = {
   subregion: Subregion;
 };
 
-
 /** A single server. Servers correspond to actual game servers that characters and guilds reside on. */
 export type ServerCharactersArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
 };
-
 
 /** A single server. Servers correspond to actual game servers that characters and guilds reside on. */
 export type ServerGuildsArgs = {
@@ -2300,7 +2224,6 @@ export type Subregion = {
   servers?: Maybe<ServerPagination>;
 };
 
-
 /** A single subregion. Subregions are used to divide a region into sub-categories, such as French or German subregions of a Europe region. */
 export type SubregionServersArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -2331,7 +2254,7 @@ export enum SubscriptionStatus {
   /** Platinum Tier subscription */
   Platinum = 'Platinum',
   /** Silver Tier subscription */
-  Silver = 'Silver'
+  Silver = 'Silver',
 }
 
 /** The type of table to examine. */
@@ -2363,7 +2286,7 @@ export enum TableDataType {
   /** Survivability (death info across multiple pulls). */
   Survivability = 'Survivability',
   /** Threat. */
-  Threat = 'Threat'
+  Threat = 'Threat',
 }
 
 /** A single user of the site. Most fields can only be accessed when authenticated as that user with the "view-user-profile" scope. */
@@ -2392,7 +2315,6 @@ export type UserData = {
   user?: Maybe<User>;
 };
 
-
 /** The user data object contains basic information about users and lets you retrieve specific users (or the current user if using the user endpoint). */
 export type UserDataUserArgs = {
   id?: InputMaybe<Scalars['Int']['input']>;
@@ -2407,7 +2329,7 @@ export enum ViewType {
   /** View. by source. */
   Source = 'Source',
   /** View by target. */
-  Target = 'Target'
+  Target = 'Target',
 }
 
 /** The world data object contains collections of data such as expansions, zones, encounters, regions, subregions, etc. */
@@ -2433,24 +2355,20 @@ export type WorldData = {
   zones?: Maybe<Array<Maybe<Zone>>>;
 };
 
-
 /** The world data object contains collections of data such as expansions, zones, encounters, regions, subregions, etc. */
 export type WorldDataEncounterArgs = {
   id?: InputMaybe<Scalars['Int']['input']>;
 };
-
 
 /** The world data object contains collections of data such as expansions, zones, encounters, regions, subregions, etc. */
 export type WorldDataExpansionArgs = {
   id?: InputMaybe<Scalars['Int']['input']>;
 };
 
-
 /** The world data object contains collections of data such as expansions, zones, encounters, regions, subregions, etc. */
 export type WorldDataRegionArgs = {
   id?: InputMaybe<Scalars['Int']['input']>;
 };
-
 
 /** The world data object contains collections of data such as expansions, zones, encounters, regions, subregions, etc. */
 export type WorldDataServerArgs = {
@@ -2459,18 +2377,15 @@ export type WorldDataServerArgs = {
   slug?: InputMaybe<Scalars['String']['input']>;
 };
 
-
 /** The world data object contains collections of data such as expansions, zones, encounters, regions, subregions, etc. */
 export type WorldDataSubregionArgs = {
   id?: InputMaybe<Scalars['Int']['input']>;
 };
 
-
 /** The world data object contains collections of data such as expansions, zones, encounters, regions, subregions, etc. */
 export type WorldDataZoneArgs = {
   id?: InputMaybe<Scalars['Int']['input']>;
 };
-
 
 /** The world data object contains collections of data such as expansions, zones, encounters, regions, subregions, etc. */
 export type WorldDataZonesArgs = {
@@ -2512,8 +2427,111 @@ export type GetCharacterQueryVariables = Exact<{
   serverRegion?: InputMaybe<Scalars['String']['input']>;
 }>;
 
+export type GetCharacterQuery = {
+  __typename?: 'Query';
+  characterData?: {
+    __typename?: 'CharacterData';
+    character?: {
+      __typename?: 'Character';
+      name: string;
+      classID: number;
+      zoneRankings?: any | null;
+      server: {
+        __typename?: 'Server';
+        name: string;
+        region: { __typename?: 'Region'; name: string };
+      };
+    } | null;
+  } | null;
+};
 
-export type GetCharacterQuery = { __typename?: 'Query', characterData?: { __typename?: 'CharacterData', character?: { __typename?: 'Character', name: string, classID: number, zoneRankings?: any | null, server: { __typename?: 'Server', name: string, region: { __typename?: 'Region', name: string } } } | null } | null };
-
-
-export const GetCharacterDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCharacter"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"serverSlug"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"serverRegion"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"characterData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"character"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"Argument","name":{"kind":"Name","value":"serverSlug"},"value":{"kind":"Variable","name":{"kind":"Name","value":"serverSlug"}}},{"kind":"Argument","name":{"kind":"Name","value":"serverRegion"},"value":{"kind":"Variable","name":{"kind":"Name","value":"serverRegion"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"classID"}},{"kind":"Field","name":{"kind":"Name","value":"server"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"region"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"zoneRankings"}}]}}]}}]}}]} as unknown as DocumentNode<GetCharacterQuery, GetCharacterQueryVariables>;
+export const GetCharacterDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetCharacter' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'name' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'serverSlug' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'serverRegion' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'characterData' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'character' },
+                  arguments: [
+                    {
+                      kind: 'Argument',
+                      name: { kind: 'Name', value: 'name' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'name' } },
+                    },
+                    {
+                      kind: 'Argument',
+                      name: { kind: 'Name', value: 'serverSlug' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'serverSlug' } },
+                    },
+                    {
+                      kind: 'Argument',
+                      name: { kind: 'Name', value: 'serverRegion' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'serverRegion' } },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'classID' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'server' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'region' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'zoneRankings' } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<GetCharacterQuery, GetCharacterQueryVariables>;

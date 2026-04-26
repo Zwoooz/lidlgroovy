@@ -2,58 +2,55 @@ import {
   ChatInputCommandInteraction,
   ColorResolvable,
   EmbedBuilder,
-  SlashCommandBuilder
-} from "discord.js";
-import { raiderioService } from "../../services/raiderioService.js";
-import { Region } from "../../generated/raiderioApi.js";
-import { Character, getRioCharacter } from "../../utils/rioLinkChar.js";
+  SlashCommandBuilder,
+} from 'discord.js';
+import { raiderioService } from '../../services/raiderioService.js';
+import { Region } from '../../generated/raiderioApi.js';
+import { Character, rioLinkCharUtil } from '../../utils/rioLinkChar.js';
 
 export default {
   data: new SlashCommandBuilder()
     .setName('rio')
     .setDescription('Displays raiderIO information for the provided character')
-    .addStringOption((option) => option.setName('region')
-      .setDescription('Realm region')
-      .setChoices(
-        { name: 'eu', value: 'eu' },
-        { name: 'us', value: 'us' }
-      )
-      .setRequired(false)
+    .addStringOption((option) =>
+      option
+        .setName('region')
+        .setDescription('Realm region')
+        .setChoices({ name: 'eu', value: 'eu' }, { name: 'us', value: 'us' })
+        .setRequired(false),
     )
-    .addStringOption((option) => option.setName('realm')
-      .setDescription('Name of realm')
-      .setRequired(false)
+    .addStringOption((option) =>
+      option.setName('realm').setDescription('Name of realm').setRequired(false),
     )
-    .addStringOption((option) => option.setName('name')
-      .setDescription('Name of character')
-      .setRequired(false)
+    .addStringOption((option) =>
+      option.setName('name').setDescription('Name of character').setRequired(false),
     ),
 
   async execute(interaction: ChatInputCommandInteraction) {
-
     // fetch options from interaction
     const region = interaction.options.getString('region');
     const realm = interaction.options.getString('realm');
     const name = interaction.options.getString('name');
     let character: Character;
     if (!region || !realm || !name) {
-      const link = getRioCharacter(interaction.user.id);
+      const link = rioLinkCharUtil.getCharacter(interaction.user.id);
       if (!link) {
         return await interaction.reply(`No character provided.
-        Link your character to your discord user with \`/rio-link\` or provide character details`);
+Link your character to your discord user with \`/rio-link\` or provide character details`);
       }
+
       character = link;
     } else {
       character = {
         region: region as Region,
         realm: realm,
-        name: name
+        name: name,
       };
     }
 
     // reply before fetching raiderIO data
     await interaction.reply({
-      content: `Searching RaiderIO for \`${character.name}-${character.realm}\`...`
+      content: `Searching RaiderIO for \`${character.name}-${character.realm}\`...`,
     });
 
     const response = await raiderioService.getCharacterProfile({
@@ -64,13 +61,14 @@ export default {
         'mythic_plus_scores_by_season:current',
         'raid_progression:current-tier',
         'gear',
-      ].join(',')
+      ].join(','),
     });
     if (!response.success) {
       if (process.env.devId && response.error.statusCode == 400) {
-        interaction.client.users.send(
+        await interaction.client.users.send(
           process.env.devId,
-          `raiderioService:\`\`\`Something went wrong on the client side:\n${JSON.stringify(response.error)}\`\`\``); //eslint-disable-line max-len
+          `raiderioService:\`\`\`Something went wrong on the client side:\n${JSON.stringify(response.error)}\`\`\``,
+        );
       }
       return await interaction.editReply({
         content: response.userFriendlyError || 'Something went wrong!',
@@ -79,17 +77,17 @@ export default {
 
     const embed = new EmbedBuilder()
       .setColor(
-        response.data.mythic_plus_scores_by_season![0].segments.all.color as ColorResolvable
+        response.data.mythic_plus_scores_by_season![0].segments.all.color as ColorResolvable,
       )
       .setTitle(`${response.data.name}-${response.data.realm}`)
       .setDescription(
         `**${response.data.active_spec_name} ${response.data.class}**\n` +
-        `\`${response.data.gear?.item_level_equipped}\` Item Level\n\u200b`
+          `\`${response.data.gear?.item_level_equipped}\` Item Level\n\u200b`,
       )
       .setThumbnail(response.data.thumbnail_url)
       .addFields({
         name: 'M+ score:',
-        value: `\`${response.data.mythic_plus_scores_by_season![0].scores.all.toString()}\``
+        value: `\`${response.data.mythic_plus_scores_by_season![0].scores.all.toString()}\``,
       });
 
     if (Object.values(response.data.raid_progression!)[0].summary) {
@@ -99,14 +97,15 @@ export default {
         region: character.region,
         realm: character.realm,
         name: character.name,
-        fields: `raid_achievement_curve:${raidName}`
+        fields: `raid_achievement_curve:${raidName}`,
       });
 
       if (!curveResponse.success) {
         if (process.env.devId && curveResponse.error.statusCode == 400) {
-          interaction.client.users.send(
+          await interaction.client.users.send(
             process.env.devId,
-            `raiderioService:\`\`\`Something went wrong on the client side:\n${JSON.stringify(curveResponse.error)}\`\`\``); //eslint-disable-line max-len
+            `raiderioService:\`\`\`Something went wrong on the client side:\n${JSON.stringify(curveResponse.error)}\`\`\``,
+          );
         }
         return await interaction.editReply({
           content: curveResponse.userFriendlyError || 'Something went wrong!',
@@ -125,22 +124,22 @@ export default {
 
       embed.addFields({
         name: 'Raiding:',
-        value: raidName.charAt(0).toUpperCase() + raidName.slice(1).replace('-', ' ') + ' ' + `\`${raidProg} - ${curve}\`` //eslint-disable-line max-len
+        value:
+          raidName.charAt(0).toUpperCase() +
+          raidName.slice(1).replace('-', ' ') +
+          ' ' +
+          `\`${raidProg} - ${curve}\``,
       });
-
     } else {
       embed.addFields({ name: 'Raid progression:', value: 'No raid progression this tier.' });
     }
 
-
-    embed.addFields(
-      {
-        name: '\u200b',
-        value: `Fetched from [**RaiderIO**](${response.data.profile_url})
-        <t:${Math.floor(Date.now() / 1000)}:R>`
-      },
-    );
+    embed.addFields({
+      name: '\u200b',
+      value: `Fetched from [**RaiderIO**](${response.data.profile_url})
+        <t:${Math.floor(Date.now() / 1000)}:R>`,
+    });
 
     return await interaction.editReply({ content: '', embeds: [embed] });
-  }
+  },
 };

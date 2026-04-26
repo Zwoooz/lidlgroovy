@@ -1,4 +1,4 @@
-import { Api, GetApiV1CharactersProfileParams, Model4 } from "../generated/raiderioApi.js";
+import { Api, GetApiV1CharactersProfileParams, Model4 } from '../generated/raiderioApi.js';
 
 interface ApiError {
   statusCode?: number;
@@ -22,21 +22,21 @@ class RaiderioService {
   constructor() {
     this.apiKey = process.env.RAIDERIO_TOKEN || '';
     this.api = new Api({
-      baseUrl: 'https://raider.io'
+      baseUrl: 'https://raider.io',
     });
   }
 
   private withApiKey<T extends Record<string, unknown>>(params: T): T & { access_key: string } {
     return {
       ...params,
-      access_key: this.apiKey
+      access_key: this.apiKey,
     };
   }
 
-
   private getDiscordFriendlyError(
     error: ApiError | HTMLError,
-    type: 'character' | 'guild'): string {
+    type: 'character' | 'guild',
+  ): string {
     const itemType = type === 'character' ? 'Character' : 'Guild';
     let statusCode: number;
 
@@ -54,7 +54,7 @@ class RaiderioService {
       case 429:
         return `⏱️ Too many requests! Please wait a moment before trying again.`;
       case 500:
-        return '❌ Something went wrong on RaiderIO\'s side. Please try again later';
+        return "❌ Something went wrong on RaiderIO's side. Please try again later";
       case 502:
       case 503:
         return `🔧 Raider.io is having issues right now. Please try again later.`;
@@ -64,30 +64,32 @@ class RaiderioService {
   }
 
   async getCharacterProfile(
-    params: Omit<GetApiV1CharactersProfileParams, 'access_key'>
+    params: Omit<GetApiV1CharactersProfileParams, 'access_key'>,
   ): Promise<ServiceResponse<Model4>> {
     try {
-      const response = await this.api.v1.getApiV1CharactersProfile(this.withApiKey({
-        ...params,
-      }));
+      const response = await this.api.v1.getApiV1CharactersProfile(
+        this.withApiKey({
+          ...params,
+        }),
+      );
 
-      const characterProfile: Model4 = await response.json() as Model4;
+      const characterProfile: Model4 = (await response.json()) as Model4;
 
       return {
         success: true,
-        data: characterProfile
+        data: characterProfile,
       };
     } catch (error) {
       try {
-        const apiError = await (error as Response).json() as ApiError;
+        const apiError = (await (error as Response).json()) as ApiError;
         return {
           success: false,
           error: {
             statusCode: apiError.statusCode,
             error: apiError.error,
-            message: apiError.message
+            message: apiError.message,
           },
-          userFriendlyError: this.getDiscordFriendlyError(apiError, 'character')
+          userFriendlyError: this.getDiscordFriendlyError(apiError, 'character'),
         };
       } catch {
         // likely got HTML response (raiderio probably down)
@@ -96,9 +98,9 @@ class RaiderioService {
           success: false,
           error: {
             statusCode: htmlError.status,
-            message: htmlError.statusText
+            message: htmlError.statusText,
           },
-          userFriendlyError: this.getDiscordFriendlyError(htmlError, 'character')
+          userFriendlyError: this.getDiscordFriendlyError(htmlError, 'character'),
         };
       }
     }

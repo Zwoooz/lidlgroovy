@@ -1,6 +1,5 @@
-import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
-import { useQueue } from "discord-player";
-
+import { ChatInputCommandInteraction, SlashCommandBuilder } from 'discord.js';
+import { useQueue } from 'discord-player';
 
 export default {
   data: new SlashCommandBuilder()
@@ -24,10 +23,10 @@ export default {
 
     queue.node.skip();
 
-    interaction.reply('The current song has been skipped');
+    await interaction.reply('The current song has been skipped');
 
     setTimeout(async () => {
       return await interaction.deleteReply().catch(console.error);
     }, 3000);
-  }
+  },
 };
