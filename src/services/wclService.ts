@@ -19,8 +19,8 @@ class WclService {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams({
         grant_type: 'client_credentials',
-        client_id: process.env.WCL_CLIENT_ID,
-        client_secret: process.env.WCL_CLIENT_SECRET,
+        client_id: process.env.WCL_CLIENT_ID!,
+        client_secret: process.env.WCL_CLIENT_SECRET!,
       }),
     });
     const { access_token, expires_in } = (await response.json()) as {

@@ -30,7 +30,7 @@ export default {
 
     // fetch options from interaction
     const region = interaction.options.getString('region', true);
-    const realm = interaction.options.getString('realm', true);
+    const realm = interaction.options.getString('realm', true).split(' ').join('');
     const name = interaction.options.getString('name', true);
 
     // reply before fetching raiderIO data
