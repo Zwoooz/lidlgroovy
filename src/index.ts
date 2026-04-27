@@ -10,6 +10,9 @@ import { DefaultExtractors } from '@discord-player/extractor';
 // import { YoutubeiExtractor } from 'discord-player-youtubei';
 import { YoutubeExtractor } from 'discord-player-youtube';
 // import suppressYouTubeErrors from './utils/supressYoutubeErrors.js';
+
+import { envCheck, isEnabled } from './utils/envCheck.js';
+
 const client = new Client({
   intents: ['Guilds', 'GuildMessages', 'GuildMembers', 'MessageContent', 'GuildVoiceStates'],
   presence: {
@@ -19,14 +22,20 @@ const client = new Client({
 
 // @ts-expect-error | for some reason the Player doesn't accept the Client type (even non-augmented)
 const player = new Player(client);
-// temporarily using new extractor until discord-player-youtubei gets updated
-await player.extractors.register(YoutubeExtractor, {
-  cookie: process.env.YOUTUBE_COOKIE,
-});
-// await player.extractors.register(YoutubeiExtractor, {
-//   cookie: process.env.YOUTUBE_COOKIE
-// })
+
+if (isEnabled('YOUTUBE_COOKIE')) {
+  // temporarily using new extractor until discord-player-youtubei gets updated
+  await player.extractors.register(YoutubeExtractor, {
+    cookie: process.env.YOUTUBE_COOKIE,
+  });
+  // await player.extractors.register(YoutubeiExtractor, {
+  //   cookie: process.env.YOUTUBE_COOKIE
+  // })
+}
 await player.extractors.loadMulti(DefaultExtractors);
+
+// validate .env after extractors for cleaner log output
+envCheck();
 
 // client commands
 client.commands = new Collection();
@@ -96,6 +105,7 @@ for (const file of playerEventFiles) {
 
 export default client;
 
+console.log('Starting client login...');
 await client.login(process.env.TOKEN);
 
 // Supress non-critical errors from youtubei.js library
