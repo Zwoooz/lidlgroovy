@@ -1,6 +1,6 @@
 export interface WclRankings {
-  bestPerformanceAverage: number;
-  medianPerformanceAverage: number;
+  bestPerformanceAverage?: number;
+  medianPerformanceAverage?: number;
   difficulty: number;
   metric: string;
   partition: number;
@@ -10,7 +10,7 @@ export interface WclRankings {
       id: number;
       name: string;
     };
-    rankPercent: number;
+    rankPercent?: number;
     medianPercent: number;
     lockedIn: boolean;
     totalKills: number;
