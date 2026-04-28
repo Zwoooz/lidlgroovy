@@ -1,5 +1,5 @@
-import { Events, Message } from "discord.js";
-import { getChannels } from "../../utils/embedSupression.js";
+import { Events, Message } from 'discord.js';
+import { getChannels } from '../../utils/embedSupression.js';
 
 export default {
   name: Events.MessageCreate,
@@ -10,5 +10,5 @@ export default {
     if (message.embeds.length > 0) {
       await message.suppressEmbeds(true);
     }
-  }
+  },
 };

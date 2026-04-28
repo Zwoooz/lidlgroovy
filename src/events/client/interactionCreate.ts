@@ -1,4 +1,4 @@
-import { Events, Interaction } from "discord.js";
+import { Events, Interaction } from 'discord.js';
 
 export default {
   name: Events.InteractionCreate,
@@ -22,5 +22,5 @@ export default {
         await interaction.reply({ content: 'There was an error executing that command!' });
       }
     }
-  }
+  },
 };

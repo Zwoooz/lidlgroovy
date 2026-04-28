@@ -1,4 +1,9 @@
-query GetCharacter($name: String, $serverSlug: String, $serverRegion: String) {
+query GetCharacter(
+  $name: String,
+  $serverSlug: String,
+  $serverRegion: String,
+  $difficulty: Int
+  ) {
   characterData {
     character(name: $name, serverSlug: $serverSlug, serverRegion: $serverRegion) {
       name
@@ -9,7 +14,7 @@ query GetCharacter($name: String, $serverSlug: String, $serverRegion: String) {
           name
         }
       }
-      zoneRankings
+      zoneRankings(difficulty: $difficulty)
     }
   }
 }

@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, ChatInputCommandInteraction } from "discord.js";
+import { SlashCommandBuilder, ChatInputCommandInteraction } from 'discord.js';
 
 export default {
   data: new SlashCommandBuilder()
@@ -7,5 +7,5 @@ export default {
 
   async execute(interaction: ChatInputCommandInteraction) {
     await interaction.reply(`Pong! \`${Date.now() - interaction.createdTimestamp}ms\``);
-  }
+  },
 };

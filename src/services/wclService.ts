@@ -51,11 +51,13 @@ class WclService {
     name: string,
     serverSlug: string,
     serverRegion: string,
+    difficulty?: number,
   ): Promise<GetCharacterQuery> {
     return this.query<GetCharacterQuery, GetCharacterQueryVariables>(GetCharacterDocument, {
       name,
       serverSlug,
       serverRegion,
+      difficulty,
     });
   }
 }

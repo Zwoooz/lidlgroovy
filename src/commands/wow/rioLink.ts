@@ -158,7 +158,7 @@ Do you want to overwrite this?\nCancelling <t:${Math.floor((Date.now() + 60000) 
     });
     if (!response.success) {
       if (process.env.devId && response.error.statusCode == 400) {
-        await interaction.client.users.send(
+        return await interaction.client.users.send(
           process.env.devId,
           `raiderioService:\`\`\`Something went wrong on the client side:\n
 ${JSON.stringify(response.error)}\`\`\``,

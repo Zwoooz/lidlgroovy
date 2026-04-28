@@ -1,5 +1,5 @@
-import { SlashCommandBuilder, ChatInputCommandInteraction } from "discord.js";
-import { addChannel, getChannels, removeChannel } from "../../utils/embedSupression.js";
+import { SlashCommandBuilder, ChatInputCommandInteraction } from 'discord.js';
+import { addChannel, getChannels, removeChannel } from '../../utils/embedSupression.js';
 
 export default {
   data: new SlashCommandBuilder()
@@ -17,6 +17,5 @@ export default {
       addChannel(channelId);
       await interaction.reply(`Embed deletion is now **ON** for ${interaction.channel?.url}`);
     }
-
-  }
+  },
 };
