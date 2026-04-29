@@ -47,3 +47,6 @@ data/*.json
 
 # LSP
 .graphqlrc.yml
+
+# very minor temporary claude code testing
+CLAUDE.md

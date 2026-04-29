@@ -1,4 +1,6 @@
-export interface WclRankings {
+import { Character } from '../generated/wclApi.js';
+
+interface WclRankings {
   bestPerformanceAverage?: number;
   medianPerformanceAverage?: number;
   difficulty: number;
@@ -19,4 +21,8 @@ export interface WclRankings {
     bestSpec: string;
     bestAmount: number;
   }[];
+}
+
+export interface WclCharacter extends Omit<Character, 'zoneRankings'> {
+  zoneRankings: WclRankings;
 }
