@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { createCanvas, loadImage } from 'canvas';
+import { CanvasRenderingContext2D, createCanvas, loadImage } from 'canvas';
 import { WclCharacter } from '../types/wcl.js';
 import { classes } from '../data/classes.js';
 
@@ -17,6 +17,24 @@ function getParseColor(parse: number): string {
   return '#e5cc80';
 }
 
+const applyGrayscale = (
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  w: number,
+  h: number,
+) => {
+  const imageData = ctx.getImageData(x, y, w, h);
+  const data = imageData.data;
+  for (let i = 0; i < data.length; i += 4) {
+    const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+    data[i] = avg;
+    data[i + 1] = avg;
+    data[i + 2] = avg;
+  }
+  ctx.putImageData(imageData, 0, y);
+};
+
 export async function generateWclImage(character: WclCharacter): Promise<Buffer> {
   const zoneRankings = character.zoneRankings;
 
@@ -26,12 +44,14 @@ export async function generateWclImage(character: WclCharacter): Promise<Buffer>
     difficulty: 20,
     bpfAvg: 18,
     bpfAvgNumber: 28,
+    mpfAvg: 12,
     encounterName: 14,
     parse: 14,
   };
   const padding = 20;
   const tablePadding = 5;
-  const rowHeight = 28;
+  const iconPadding = tablePadding * 2;
+  const rowHeight = 34;
   const rows = zoneRankings.rankings.length;
   const specIconSize = 18;
 
@@ -46,7 +66,11 @@ export async function generateWclImage(character: WclCharacter): Promise<Buffer>
         ),
       ),
     ) +
-    tablePadding * 4;
+    tablePadding * 4 +
+    padding +
+    tablePadding +
+    padding +
+    tablePadding * 3;
   const bestPercentColumnWidth =
     Math.ceil(canvas.getContext('2d').measureText('Best %').width) +
     tablePadding * 4 +
@@ -72,7 +96,8 @@ export async function generateWclImage(character: WclCharacter): Promise<Buffer>
     padding +
     fontSizes.bpfAvgNumber +
     padding +
-    rowHeight;
+    rowHeight +
+    padding;
   const height = rankingsY + rows * rowHeight;
 
   const color = {
@@ -183,6 +208,39 @@ export async function generateWclImage(character: WclCharacter): Promise<Buffer>
     ctx.fillText('-', width - padding - 50, bpfAvgNumberY);
   }
 
+  // median performance average
+  const mpfAvgY = bpfAvgTextY + padding / 4;
+  const mpfAvgNumber = zoneRankings.medianPerformanceAverage
+    ? zoneRankings.medianPerformanceAverage.toFixed(1)
+    : '-';
+  ctx.font = `${fontSizes.mpfAvg}px Sans`;
+  const mpfAvgNumberWidth = ctx.measureText(mpfAvgNumber).width;
+  ctx.fillStyle = color.defaultText;
+  ctx.textAlign = 'right';
+  ctx.fillText(
+    'Median Perf. Avg:',
+    width - padding * 2 - mpfAvgNumberWidth - tablePadding,
+    mpfAvgY,
+  );
+  ctx.fillStyle = mpfAvgNumber ? getParseColor(Number(mpfAvgNumber)) : getParseColor(0);
+  ctx.fillText(mpfAvgNumber.toString(), width - padding * 2, mpfAvgY);
+  ctx.textAlign = 'left';
+
+  // kills logged
+  const killsY = mpfAvgY + padding;
+  const killsNumberX = width - padding * 2 - mpfAvgNumberWidth;
+  ctx.fillStyle = color.defaultText;
+  let kills = 0;
+  for (const [, r] of zoneRankings.rankings.entries()) {
+    kills += r.totalKills;
+  }
+  const killsText = kills.toString();
+  const killsTextLength = ctx.measureText(killsText).width;
+  ctx.fillText(killsText, killsNumberX, killsY);
+  ctx.textAlign = 'right';
+  ctx.fillText('Kills Logged:', killsNumberX - killsTextLength, killsY);
+  ctx.textAlign = 'left';
+
   // table header
   ctx.strokeStyle = color.tableDivider;
   ctx.lineWidth = 1;
@@ -230,12 +288,28 @@ export async function generateWclImage(character: WclCharacter): Promise<Buffer>
 
     let parse;
     let showSpecIcon = false;
+
+    // encounter icon
+    const bossIconX = padding + tablePadding;
+    const bossIconBaseUrl = 'https://assets.rpglogs.com/img/warcraft/bosses/';
+    const bossId = r.encounter.id;
+    const bossIcon = await loadImage(`${bossIconBaseUrl}${bossId}-icon.jpg`);
+    const bossIconSize = 56 / 2 - 2;
+    ctx.drawImage(bossIcon, bossIconX, y - bossIconSize / 2, bossIconSize, bossIconSize);
+
     if (r.rankPercent) {
       showSpecIcon = true;
+
+      // encounter icon draw
+
       // encounter name
       ctx.fillStyle = color.encounterText;
       ctx.font = `bold ${fontSizes.encounterName}px Sans`;
-      ctx.fillText(r.encounter.name, padding + tablePadding, y + fontSizes.encounterName / 2 - 2);
+      ctx.fillText(
+        r.encounter.name,
+        bossIconX + padding + tablePadding * 3,
+        y + fontSizes.encounterName / 2 - 2,
+      );
 
       // parse
       parse = Math.floor(r.rankPercent);
@@ -248,21 +322,27 @@ export async function generateWclImage(character: WclCharacter): Promise<Buffer>
         0,
         36,
         36,
-        dpsColumnX - specIconSize - tablePadding,
+        dpsColumnX - specIconSize - iconPadding,
         y - specIconSize / 2,
         specIconSize,
         specIconSize,
       );
-      ctx.moveTo(dpsColumnX - specIconSize - tablePadding - 1, y - specIconSize / 2 - 1);
-      ctx.lineTo(dpsColumnX - tablePadding + 1, y - specIconSize / 2 - 1);
-      ctx.lineTo(dpsColumnX - tablePadding + 1, y + specIconSize / 2 + 1);
-      ctx.lineTo(dpsColumnX - specIconSize - tablePadding - 1, y + specIconSize / 2 + 1);
-      ctx.lineTo(dpsColumnX - specIconSize - tablePadding - 1, y - specIconSize / 2 - 2);
+      ctx.moveTo(dpsColumnX - specIconSize - iconPadding - 1, y - specIconSize / 2 - 1);
+      ctx.lineTo(dpsColumnX - iconPadding + 1, y - specIconSize / 2 - 1);
+      ctx.lineTo(dpsColumnX - iconPadding + 1, y + specIconSize / 2 + 1);
+      ctx.lineTo(dpsColumnX - specIconSize - iconPadding - 1, y + specIconSize / 2 + 1);
+      ctx.lineTo(dpsColumnX - specIconSize - iconPadding - 1, y - specIconSize / 2 - 2);
     } else {
+      applyGrayscale(ctx, bossIconX, y - bossIconSize / 2, bossIconSize, bossIconSize);
+
       // encounter name
       ctx.fillStyle = color.encounterTextNoParse;
       ctx.font = `bold ${fontSizes.encounterName}px Sans`;
-      ctx.fillText(r.encounter.name, padding + tablePadding, y + fontSizes.encounterName / 2 - 2);
+      ctx.fillText(
+        r.encounter.name,
+        bossIconX + padding + tablePadding * 3,
+        y + fontSizes.encounterName / 2 - 2,
+      );
 
       // parse
       parse = '-';
@@ -273,7 +353,7 @@ export async function generateWclImage(character: WclCharacter): Promise<Buffer>
     const parseWidth = ctx.measureText(parseText).width;
     ctx.fillText(
       parseText,
-      dpsColumnX - tablePadding * 2 - parseWidth - (showSpecIcon ? specIconSize : 0),
+      dpsColumnX - tablePadding - parseWidth - (showSpecIcon ? specIconSize + iconPadding + 1 : 0),
       y + fontSizes.parse / 2 - 2,
     );
 
