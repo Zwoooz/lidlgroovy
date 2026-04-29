@@ -32,7 +32,7 @@ const applyGrayscale = (
     data[i + 1] = avg;
     data[i + 2] = avg;
   }
-  ctx.putImageData(imageData, 0, y);
+  ctx.putImageData(imageData, x, y);
 };
 
 export async function generateWclImage(character: WclCharacter): Promise<Buffer> {
@@ -333,6 +333,7 @@ export async function generateWclImage(character: WclCharacter): Promise<Buffer>
       ctx.lineTo(dpsColumnX - specIconSize - iconPadding - 1, y + specIconSize / 2 + 1);
       ctx.lineTo(dpsColumnX - specIconSize - iconPadding - 1, y - specIconSize / 2 - 2);
     } else {
+      // grayscale bossIcon if no parse
       applyGrayscale(ctx, bossIconX, y - bossIconSize / 2, bossIconSize, bossIconSize);
 
       // encounter name
