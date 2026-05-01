@@ -51,7 +51,7 @@ export async function generateWclImage(character: WclCharacter): Promise<Buffer>
   const padding = 20;
   const tablePadding = 5;
   const iconPadding = tablePadding * 2;
-  const rowHeight = 34;
+  const rowHeight = 36;
   const rows = zoneRankings.rankings.length;
   const specIconSize = 18;
 
@@ -132,11 +132,6 @@ export async function generateWclImage(character: WclCharacter): Promise<Buffer>
     .split('_')
     .map((w) => w[0].toUpperCase() + w.slice(1))
     .join(' ');
-  const specIconId =
-    classes[className].specs[
-      zoneRankings.rankings[1].bestSpec as keyof (typeof classes)[typeof className]['specs']
-    ];
-
   // real canvas size
   canvas.width = width;
   canvas.height = height;
@@ -170,7 +165,6 @@ export async function generateWclImage(character: WclCharacter): Promise<Buffer>
   // header divider
   ctx.strokeStyle = color.divider;
   ctx.lineWidth = 1;
-  ctx.beginPath();
   ctx.moveTo(0, headerDividerY);
   ctx.lineTo(width, headerDividerY);
   ctx.stroke();
@@ -241,26 +235,123 @@ export async function generateWclImage(character: WclCharacter): Promise<Buffer>
   ctx.fillText('Kills Logged:', killsNumberX - killsTextLength, killsY);
   ctx.textAlign = 'left';
 
+  // all stars
+  const allStarsY = rankingsY - rowHeight * 1.5 - padding;
+  ctx.font = `${fontSizes.mpfAvg}px Sans`;
+
+  const allStarsText = 'All Star Points:  ';
+  const allStarsPoints = zoneRankings.allStars[0].points.toFixed(2) + ' ';
+  const allStarsRank = zoneRankings.allStars[0].rank.toString();
+  const allStarsRankOpen = '(';
+  const allStarsRankClose = ') ';
+
+  const allStarsTextWidth = ctx.measureText(allStarsText).width;
+  const allStarsPointsWidth = ctx.measureText(allStarsPoints).width;
+  const allStarsRankOpenWidth = ctx.measureText(allStarsRankOpen).width;
+  const allStarsRankCloseWidth = ctx.measureText(allStarsRankClose).width;
+  ctx.font = `bold ${fontSizes.mpfAvg}px Sans`;
+  const allStarsRankWidth = ctx.measureText(allStarsRank).width;
+  ctx.font = `${fontSizes.mpfAvg}px Sans`;
+
+  const allStarsSpecIconId =
+    classes[className].specs[
+      zoneRankings.allStars[0].spec as keyof (typeof classes)[typeof className]['specs']
+    ];
+
+  const totalAllStarsWidth =
+    allStarsTextWidth +
+    allStarsPointsWidth +
+    allStarsRankWidth +
+    allStarsRankOpenWidth +
+    allStarsRankCloseWidth +
+    specIconSize +
+    tablePadding +
+    4;
+  const allStarsStartX = width / 2 - totalAllStarsWidth / 2;
+
+  ctx.fillStyle = color.defaultText;
+  ctx.fillText(allStarsText, allStarsStartX, allStarsY);
+
+  ctx.fillStyle = color.dps;
+  ctx.fillText(allStarsPoints, allStarsStartX + allStarsTextWidth, allStarsY);
+
+  ctx.fillStyle = color.defaultText;
+  ctx.fillText(
+    allStarsRankOpen,
+    allStarsStartX + allStarsTextWidth + allStarsPointsWidth,
+    allStarsY,
+  );
+
+  ctx.font = `bold ${fontSizes.mpfAvg}px Sans`;
+  ctx.fillStyle = getParseColor(zoneRankings.allStars[0].rankPercent);
+  ctx.fillText(
+    allStarsRank,
+    allStarsStartX + allStarsTextWidth + allStarsPointsWidth + allStarsRankOpenWidth,
+    allStarsY,
+  );
+
+  ctx.font = `${fontSizes.mpfAvg}px Sans`;
+  ctx.fillStyle = color.defaultText;
+  ctx.fillText(
+    allStarsRankClose,
+    allStarsStartX +
+      allStarsTextWidth +
+      allStarsPointsWidth +
+      allStarsRankWidth +
+      allStarsRankOpenWidth,
+    allStarsY,
+  );
+
+  // spec icon load
+  const specIconsPath = path.join(process.cwd(), 'assets/images/specIcons.jpg');
+  const specIcon = await loadImage(specIconsPath);
+
+  // all stars spec icon
+  const allStarsIconX =
+    allStarsStartX +
+    allStarsTextWidth +
+    allStarsPointsWidth +
+    allStarsRankOpenWidth +
+    allStarsRankWidth +
+    allStarsRankCloseWidth +
+    tablePadding;
+  const allStarsIconY = allStarsY - fontSizes.mpfAvg / 2 - specIconSize / 2;
+  ctx.drawImage(
+    specIcon,
+    36 * allStarsSpecIconId,
+    0,
+    36,
+    36,
+    allStarsIconX,
+    allStarsIconY,
+    specIconSize,
+    specIconSize,
+  );
+  ctx.strokeStyle = color.divider;
+  ctx.lineWidth = 1;
+  ctx.moveTo(allStarsIconX - 1, allStarsIconY - 1);
+  ctx.lineTo(allStarsIconX + specIconSize + 1, allStarsIconY - 1);
+  ctx.lineTo(allStarsIconX + specIconSize + 1, allStarsIconY + specIconSize + 1);
+  ctx.lineTo(allStarsIconX - 1, allStarsIconY + specIconSize + 1);
+  ctx.lineTo(allStarsIconX - 1, allStarsIconY - 2);
+  ctx.stroke();
+
   // table header
   ctx.strokeStyle = color.tableDivider;
   ctx.lineWidth = 1;
-  ctx.beginPath();
   ctx.moveTo(padding, rankingsY - rowHeight * 1.5);
   ctx.lineTo(width - padding, rankingsY - rowHeight * 1.5);
   ctx.stroke();
   ctx.fillStyle = color.tableHeader;
   ctx.fillRect(padding, rankingsY - rowHeight * 1.5, width - padding * 2, rowHeight);
   ctx.fillStyle = color.defaultText;
-  ctx.font = `bold ${fontSizes.encounterName}px Sans`;
+  ctx.font = `${fontSizes.encounterName}px Sans`;
   ctx.textAlign = 'center';
   const headerTextY = rankingsY - rowHeight + fontSizes.encounterName / 2 - 2;
   ctx.fillText('Boss', padding + (parseColumnX - padding) / 2, headerTextY);
   ctx.fillText('Best %', parseColumnX + (dpsColumnX - parseColumnX) / 2, headerTextY);
   ctx.fillText('Highest DPS', dpsColumnX + (width - padding - dpsColumnX) / 2, headerTextY);
   ctx.textAlign = 'left';
-
-  const specIconsPath = path.join(process.cwd(), 'assets/images/specIcons.jpg');
-  const specIcon = await loadImage(specIconsPath);
 
   // rankings
   for (const [i, r] of zoneRankings.rankings.entries()) {
@@ -290,17 +381,25 @@ export async function generateWclImage(character: WclCharacter): Promise<Buffer>
     let showSpecIcon = false;
 
     // encounter icon
-    const bossIconX = padding + tablePadding;
+    const bossIconX = padding + tablePadding * 1.5;
     const bossIconBaseUrl = 'https://assets.rpglogs.com/img/warcraft/bosses/';
     const bossId = r.encounter.id;
     const bossIcon = await loadImage(`${bossIconBaseUrl}${bossId}-icon.jpg`);
     const bossIconSize = 56 / 2 - 2;
     ctx.drawImage(bossIcon, bossIconX, y - bossIconSize / 2, bossIconSize, bossIconSize);
 
+    ctx.strokeStyle = color.divider;
+    ctx.moveTo(bossIconX - 1, y - bossIconSize / 2 - 1);
+    ctx.lineTo(bossIconX + bossIconSize + 1, y - bossIconSize / 2 - 1);
+    ctx.lineTo(bossIconX + bossIconSize + 1, y + bossIconSize / 2 + 1);
+    ctx.lineTo(bossIconX - 1, y + bossIconSize / 2 + 1);
+    ctx.lineTo(bossIconX - 1, y - bossIconSize / 2 - 2);
+    ctx.stroke();
+
     if (r.rankPercent) {
       showSpecIcon = true;
-
-      // encounter icon draw
+      const specIconId =
+        classes[className].specs[r.bestSpec as keyof (typeof classes)[typeof className]['specs']];
 
       // encounter name
       ctx.fillStyle = color.encounterText;
@@ -377,16 +476,13 @@ export async function generateWclImage(character: WclCharacter): Promise<Buffer>
       ctx.strokeStyle = color.tableHeaderDivider;
       ctx.lineWidth = 1;
       for (let j = 0; j < 2; j += 1) {
-        ctx.beginPath();
         ctx.moveTo(padding + j * (width - padding * 2), headerDividerY);
         ctx.lineTo(padding + j * (width - padding * 2), tableBottom);
         ctx.stroke();
       }
-      ctx.beginPath();
       ctx.moveTo(parseColumnX, columnDividersTop);
       ctx.lineTo(parseColumnX, tableBottom);
       ctx.stroke();
-      ctx.beginPath();
       ctx.moveTo(dpsColumnX, columnDividersTop);
       ctx.lineTo(dpsColumnX, tableBottom);
       ctx.stroke();

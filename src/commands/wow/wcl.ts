@@ -26,6 +26,17 @@ export default {
     )
     .addStringOption((option) =>
       option.setName('name').setDescription('Name of character').setRequired(true),
+    )
+    .addIntegerOption((option) =>
+      option
+        .setName('difficulty')
+        .setDescription('Difficulty')
+        .setChoices(
+          { name: 'mythic', value: 5 },
+          { name: 'heroic', value: 4 },
+          { name: 'normal', value: 3 },
+          { name: 'LFR', value: 1 },
+        ),
     ),
 
   async execute(interaction: ChatInputCommandInteraction) {
@@ -41,10 +52,12 @@ export default {
     const realm = interaction.options.getString('realm', true).split(' ').join('');
     const name = interaction.options.getString('name', true);
 
+    const difficulty = interaction.options.getInteger('difficulty') ?? undefined;
+
     // reply before fetching raiderIO data
     await interaction.reply({ content: `Searching WCL for \`${name}-${realm}\`...` });
 
-    const data = await wclService.getCharacter(name, realm, region);
+    const data = await wclService.getCharacter(name, realm, region, difficulty);
     const character = data.characterData?.character as WclCharacter;
 
     if (!character) return await interaction.editReply('Character not found.');
