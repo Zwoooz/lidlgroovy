@@ -1,6 +1,10 @@
 import {
+  ActionRowBuilder,
   AttachmentBuilder,
+  ButtonBuilder,
+  ButtonStyle,
   ChatInputCommandInteraction,
+  ComponentType,
   // EmbedBuilder,
   MessageFlags,
   SlashCommandBuilder,
@@ -10,6 +14,24 @@ import { isEnabled } from '../../utils/envCheck.js';
 import { WclCharacter } from '../../types/wcl.js';
 import { generateWclImage } from '../../utils/wclCanvas.js';
 import { WclCharacterLink, wclLinkCharUtil } from '../../utils/wclLinkChar.js';
+
+const DIFFICULTIES = [
+  { label: 'Mythic', value: 5 },
+  { label: 'Heroic', value: 4 },
+  { label: 'Normal', value: 3 },
+  { label: 'LFR', value: 1 },
+] as const;
+
+function buildDifficultyRow(activeDifficulty: number, disabled = false) {
+  const buttons = DIFFICULTIES.map(({ label, value }) =>
+    new ButtonBuilder()
+      .setCustomId(`wcl_diff_${value}`)
+      .setLabel(label)
+      .setStyle(value === activeDifficulty ? ButtonStyle.Primary : ButtonStyle.Secondary)
+      .setDisabled(disabled || value === activeDifficulty),
+  );
+  return new ActionRowBuilder<ButtonBuilder>().addComponents(...buttons);
+}
 
 export default {
   data: new SlashCommandBuilder()
@@ -81,7 +103,55 @@ Link your character to your discord user with \`/wcl-link\` or provide character
 
     const imageBuffer = await generateWclImage(wclCharacter);
     const attachment = new AttachmentBuilder(imageBuffer, { name: 'wcl.png' });
+    const row = buildDifficultyRow(wclCharacter.zoneRankings.difficulty);
 
-    await interaction.editReply({ content: '', files: [attachment] });
+    let currentDifficulty = wclCharacter.zoneRankings.difficulty;
+    const message = await interaction.editReply({
+      content: '',
+      files: [attachment],
+      components: [row],
+    });
+
+    const collector = message.createMessageComponentCollector({
+      componentType: ComponentType.Button,
+      time: 5 * 60 * 1000,
+    });
+
+    collector.on('collect', async (btn) => {
+      await btn.deferUpdate();
+      await interaction.editReply({ components: [buildDifficultyRow(currentDifficulty, true)] });
+
+      const newDifficulty = parseInt(btn.customId.replace('wcl_diff_', ''));
+      const newData = await wclService.getCharacter(
+        character.name,
+        character.realm,
+        character.region,
+        newDifficulty,
+      );
+      const newWclCharacter = newData.characterData?.character as WclCharacter;
+
+      if (!newWclCharacter) {
+        await interaction.editReply({ components: [buildDifficultyRow(currentDifficulty)] });
+        return;
+      }
+
+      currentDifficulty = newWclCharacter.zoneRankings.difficulty;
+      const newBuffer = await generateWclImage(newWclCharacter);
+      const newAttachment = new AttachmentBuilder(newBuffer, { name: 'wcl.png' });
+
+      await interaction.editReply({
+        files: [newAttachment],
+        components: [buildDifficultyRow(currentDifficulty)],
+      });
+    });
+
+    collector.on('end', async () => {
+      await interaction
+        .editReply({
+          content: 'Buttons have expired, run `/wcl` again for new ones.',
+          components: [buildDifficultyRow(currentDifficulty, true)],
+        })
+        .catch(() => {});
+    });
   },
 };

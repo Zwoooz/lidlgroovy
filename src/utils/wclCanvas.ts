@@ -235,107 +235,108 @@ export async function generateWclImage(character: WclCharacter): Promise<Buffer>
   ctx.fillText('Kills Logged:', killsNumberX - killsTextLength, killsY);
   ctx.textAlign = 'left';
 
-  // all stars
-  const allStarsY = rankingsY - rowHeight * 1.5 - padding;
-  ctx.font = `${fontSizes.mpfAvg}px Sans`;
-
-  const allStarsText = 'All Star Points:  ';
-  const allStarsPoints = zoneRankings.allStars[0].points.toFixed(2) + ' ';
-  const allStarsRank = zoneRankings.allStars[0].rank.toString();
-  const allStarsRankOpen = '(';
-  const allStarsRankClose = ') ';
-
-  const allStarsTextWidth = ctx.measureText(allStarsText).width;
-  const allStarsPointsWidth = ctx.measureText(allStarsPoints).width;
-  const allStarsRankOpenWidth = ctx.measureText(allStarsRankOpen).width;
-  const allStarsRankCloseWidth = ctx.measureText(allStarsRankClose).width;
-  ctx.font = `bold ${fontSizes.mpfAvg}px Sans`;
-  const allStarsRankWidth = ctx.measureText(allStarsRank).width;
-  ctx.font = `${fontSizes.mpfAvg}px Sans`;
-
-  const allStarsSpecIconId =
-    classes[className].specs[
-      zoneRankings.allStars[0].spec as keyof (typeof classes)[typeof className]['specs']
-    ];
-
-  const totalAllStarsWidth =
-    allStarsTextWidth +
-    allStarsPointsWidth +
-    allStarsRankWidth +
-    allStarsRankOpenWidth +
-    allStarsRankCloseWidth +
-    specIconSize +
-    tablePadding +
-    4;
-  const allStarsStartX = width / 2 - totalAllStarsWidth / 2;
-
-  ctx.fillStyle = color.defaultText;
-  ctx.fillText(allStarsText, allStarsStartX, allStarsY);
-
-  ctx.fillStyle = color.dps;
-  ctx.fillText(allStarsPoints, allStarsStartX + allStarsTextWidth, allStarsY);
-
-  ctx.fillStyle = color.defaultText;
-  ctx.fillText(
-    allStarsRankOpen,
-    allStarsStartX + allStarsTextWidth + allStarsPointsWidth,
-    allStarsY,
-  );
-
-  ctx.font = `bold ${fontSizes.mpfAvg}px Sans`;
-  ctx.fillStyle = getParseColor(zoneRankings.allStars[0].rankPercent);
-  ctx.fillText(
-    allStarsRank,
-    allStarsStartX + allStarsTextWidth + allStarsPointsWidth + allStarsRankOpenWidth,
-    allStarsY,
-  );
-
-  ctx.font = `${fontSizes.mpfAvg}px Sans`;
-  ctx.fillStyle = color.defaultText;
-  ctx.fillText(
-    allStarsRankClose,
-    allStarsStartX +
-      allStarsTextWidth +
-      allStarsPointsWidth +
-      allStarsRankWidth +
-      allStarsRankOpenWidth,
-    allStarsY,
-  );
-
   // spec icon load
   const specIconsPath = path.join(process.cwd(), 'assets/images/specIcons.jpg');
   const specIcon = await loadImage(specIconsPath);
 
-  // all stars spec icon
-  const allStarsIconX =
-    allStarsStartX +
-    allStarsTextWidth +
-    allStarsPointsWidth +
-    allStarsRankOpenWidth +
-    allStarsRankWidth +
-    allStarsRankCloseWidth +
-    tablePadding;
-  const allStarsIconY = allStarsY - fontSizes.mpfAvg / 2 - specIconSize / 2;
-  ctx.drawImage(
-    specIcon,
-    36 * allStarsSpecIconId,
-    0,
-    36,
-    36,
-    allStarsIconX,
-    allStarsIconY,
-    specIconSize,
-    specIconSize,
-  );
-  ctx.strokeStyle = color.divider;
-  ctx.lineWidth = 1;
-  ctx.moveTo(allStarsIconX - 1, allStarsIconY - 1);
-  ctx.lineTo(allStarsIconX + specIconSize + 1, allStarsIconY - 1);
-  ctx.lineTo(allStarsIconX + specIconSize + 1, allStarsIconY + specIconSize + 1);
-  ctx.lineTo(allStarsIconX - 1, allStarsIconY + specIconSize + 1);
-  ctx.lineTo(allStarsIconX - 1, allStarsIconY - 2);
-  ctx.stroke();
+  // all stars
+  if (zoneRankings.difficulty !== 1) {
+    const allStarsY = rankingsY - rowHeight * 1.5 - padding;
+    ctx.font = `${fontSizes.mpfAvg}px Sans`;
 
+    const allStarsText = 'All Star Points:  ';
+    const allStarsPoints = zoneRankings.allStars[0].points.toFixed(2) + ' ';
+    const allStarsRank = zoneRankings.allStars[0].rank.toString();
+    const allStarsRankOpen = '(';
+    const allStarsRankClose = ') ';
+
+    const allStarsTextWidth = ctx.measureText(allStarsText).width;
+    const allStarsPointsWidth = ctx.measureText(allStarsPoints).width;
+    const allStarsRankOpenWidth = ctx.measureText(allStarsRankOpen).width;
+    const allStarsRankCloseWidth = ctx.measureText(allStarsRankClose).width;
+    ctx.font = `bold ${fontSizes.mpfAvg}px Sans`;
+    const allStarsRankWidth = ctx.measureText(allStarsRank).width;
+    ctx.font = `${fontSizes.mpfAvg}px Sans`;
+
+    const allStarsSpecIconId =
+      classes[className].specs[
+        zoneRankings.allStars[0].spec as keyof (typeof classes)[typeof className]['specs']
+      ];
+
+    const totalAllStarsWidth =
+      allStarsTextWidth +
+      allStarsPointsWidth +
+      allStarsRankWidth +
+      allStarsRankOpenWidth +
+      allStarsRankCloseWidth +
+      specIconSize +
+      tablePadding +
+      4;
+    const allStarsStartX = width / 2 - totalAllStarsWidth / 2;
+
+    ctx.fillStyle = color.defaultText;
+    ctx.fillText(allStarsText, allStarsStartX, allStarsY);
+
+    ctx.fillStyle = color.dps;
+    ctx.fillText(allStarsPoints, allStarsStartX + allStarsTextWidth, allStarsY);
+
+    ctx.fillStyle = color.defaultText;
+    ctx.fillText(
+      allStarsRankOpen,
+      allStarsStartX + allStarsTextWidth + allStarsPointsWidth,
+      allStarsY,
+    );
+
+    ctx.font = `bold ${fontSizes.mpfAvg}px Sans`;
+    ctx.fillStyle = getParseColor(zoneRankings.allStars[0].rankPercent);
+    ctx.fillText(
+      allStarsRank,
+      allStarsStartX + allStarsTextWidth + allStarsPointsWidth + allStarsRankOpenWidth,
+      allStarsY,
+    );
+
+    ctx.font = `${fontSizes.mpfAvg}px Sans`;
+    ctx.fillStyle = color.defaultText;
+    ctx.fillText(
+      allStarsRankClose,
+      allStarsStartX +
+        allStarsTextWidth +
+        allStarsPointsWidth +
+        allStarsRankWidth +
+        allStarsRankOpenWidth,
+      allStarsY,
+    );
+
+    // all stars spec icon
+    const allStarsIconX =
+      allStarsStartX +
+      allStarsTextWidth +
+      allStarsPointsWidth +
+      allStarsRankOpenWidth +
+      allStarsRankWidth +
+      allStarsRankCloseWidth +
+      tablePadding;
+    const allStarsIconY = allStarsY - fontSizes.mpfAvg / 2 - specIconSize / 2;
+    ctx.drawImage(
+      specIcon,
+      36 * allStarsSpecIconId,
+      0,
+      36,
+      36,
+      allStarsIconX,
+      allStarsIconY,
+      specIconSize,
+      specIconSize,
+    );
+    ctx.strokeStyle = color.divider;
+    ctx.lineWidth = 1;
+    ctx.moveTo(allStarsIconX - 1, allStarsIconY - 1);
+    ctx.lineTo(allStarsIconX + specIconSize + 1, allStarsIconY - 1);
+    ctx.lineTo(allStarsIconX + specIconSize + 1, allStarsIconY + specIconSize + 1);
+    ctx.lineTo(allStarsIconX - 1, allStarsIconY + specIconSize + 1);
+    ctx.lineTo(allStarsIconX - 1, allStarsIconY - 2);
+    ctx.stroke();
+  }
   // table header
   ctx.strokeStyle = color.tableDivider;
   ctx.lineWidth = 1;
