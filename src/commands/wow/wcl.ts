@@ -9,6 +9,7 @@ import { wclService } from '../../services/wclService.js';
 import { isEnabled } from '../../utils/envCheck.js';
 import { WclCharacter } from '../../types/wcl.js';
 import { generateWclImage } from '../../utils/wclCanvas.js';
+import { WclCharacterLink, wclLinkCharUtil } from '../../utils/wclLinkChar.js';
 
 export default {
   data: new SlashCommandBuilder()
@@ -19,13 +20,13 @@ export default {
         .setName('region')
         .setDescription('Realm region')
         .setChoices({ name: 'eu', value: 'eu' }, { name: 'us', value: 'us' })
-        .setRequired(true),
+        .setRequired(false),
     )
     .addStringOption((option) =>
-      option.setName('realm').setDescription('Name of realm').setRequired(true),
+      option.setName('realm').setDescription('Name of realm').setRequired(false),
     )
     .addStringOption((option) =>
-      option.setName('name').setDescription('Name of character').setRequired(true),
+      option.setName('name').setDescription('Name of character').setRequired(false),
     )
     .addIntegerOption((option) =>
       option
@@ -47,22 +48,38 @@ export default {
       });
     }
 
-    // fetch options from interaction
-    const region = interaction.options.getString('region', true);
-    const realm = interaction.options.getString('realm', true).split(' ').join('');
-    const name = interaction.options.getString('name', true);
-
+    const region = interaction.options.getString('region');
+    const realm = interaction.options.getString('realm');
+    const name = interaction.options.getString('name');
     const difficulty = interaction.options.getInteger('difficulty') ?? undefined;
 
-    // reply before fetching raiderIO data
-    await interaction.reply({ content: `Searching WCL for \`${name}-${realm}\`...` });
+    let character: WclCharacterLink;
+    if (!region || !realm || !name) {
+      const link = wclLinkCharUtil.getCharacter(interaction.user.id);
+      if (!link) {
+        return await interaction.reply(`No character provided.
+Link your character to your discord user with \`/wcl-link\` or provide character details`);
+      }
+      character = link;
+    } else {
+      character = { region, realm: realm.split(' ').join(''), name };
+    }
 
-    const data = await wclService.getCharacter(name, realm, region, difficulty);
-    const character = data.characterData?.character as WclCharacter;
+    await interaction.reply({
+      content: `Searching WCL for \`${character.name}-${character.realm}\`...`,
+    });
 
-    if (!character) return await interaction.editReply('Character not found.');
+    const data = await wclService.getCharacter(
+      character.name,
+      character.realm,
+      character.region,
+      difficulty,
+    );
+    const wclCharacter = data.characterData?.character as WclCharacter;
 
-    const imageBuffer = await generateWclImage(character);
+    if (!wclCharacter) return await interaction.editReply('Character not found.');
+
+    const imageBuffer = await generateWclImage(wclCharacter);
     const attachment = new AttachmentBuilder(imageBuffer, { name: 'wcl.png' });
 
     await interaction.editReply({ content: '', files: [attachment] });
