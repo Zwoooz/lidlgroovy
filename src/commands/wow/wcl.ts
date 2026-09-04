@@ -100,6 +100,10 @@ Link your character to your discord user with \`/wcl-link\` or provide character
     const wclCharacter = data.characterData?.character as WclCharacter;
 
     if (!wclCharacter) return await interaction.editReply('Character not found.');
+    if (!wclCharacter.zoneRankings.bestPerformanceAverage)
+      return await interaction.editReply(
+        'No logs were found on this character for the current tier.',
+      );
 
     const imageBuffer = await generateWclImage(wclCharacter);
     const attachment = new AttachmentBuilder(imageBuffer, { name: 'wcl.png' });
